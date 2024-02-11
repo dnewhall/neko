@@ -35,3 +35,7 @@ bin
 /extra/chocolatey/LICENSE
 /extra/chocolatey/*.zip
 /extra/chocolatey/*.nupkg
+
+# Stupid file explorer files
+.DS_Store
+Thumbs.db
