@@ -50,7 +50,10 @@ extern void QuitApplicationEventLoop(void);
 	<h1>UI</h1>
 	<p>
 	Core native User Interface support. This API uses native WIN32 API on Windows,
-	Carbon API on OSX, and GTK3 on Linux.
+	Carbon API on MacOS, and GTK3 on Linux.
+	</p>
+	<p>
+	Functions need to be loaded from the [ui.ndll] library : [$loader.loadprim("ui@...")]
 	</p>
 	</doc>
 **/
@@ -155,7 +158,7 @@ void ui_main() {
 #	elif defined(NEKO_LINUX)
 	gdk_threads_init();
 	gtk_init(NULL,NULL);
-	setlocale(LC_NUMERIC,"POSIX"); // prevent broking atof()
+	setlocale(LC_NUMERIC,"POSIX"); // prevent breaking atof()
 	data.tid = pthread_self();
 	pthread_mutex_init(&data.lock,NULL);
 #	endif

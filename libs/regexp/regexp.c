@@ -55,6 +55,9 @@ static field id_len;
 	<p>
 	Regular expressions using PCRE engine.
 	</p>
+	<p>
+	Functions need to be loaded from the [regexp.ndll] library : [$loader.loadprim("regexp@...")]
+	</p>
 	</doc>
 **/
 

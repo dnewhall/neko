@@ -33,6 +33,9 @@ typedef int SOCKET;
 	<p>
 	API to connect and use MySQL database
 	</p>
+	<p>
+	Functions need to be loaded from the [mysql.ndll] library : [$loader.loadprim("mysql@...")]
+	</p>
 	</doc>
 **/
 
@@ -126,7 +129,7 @@ static value result_get_nfields( value o ) {
 
 /**
 	result_get_fields_names : 'result -> string array
-	<doc>Return the fields names corresponding results columns</doc>
+	<doc>Return the names of the fields in the results columns</doc>
 **/
 static value result_get_fields_names( value o ) {
 	result *r;

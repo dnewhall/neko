@@ -30,6 +30,9 @@
 	Sqlite is a small embeddable SQL database that store all its data into
 	a single file. See https://sqlite.org for more details.
 	</p>
+	<p>
+	Functions need to be loaded from the [sqlite.ndll] library : [$loader.loadprim("sqlite@...")]
+	</p>
 	</doc>
 **/
 

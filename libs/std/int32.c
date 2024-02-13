@@ -25,7 +25,7 @@
 	<doc>
 	<h1>Int32</h1>
 	<p>
-	Int32 api is deprecated as of Neko 2.0, which have native support for Int32.
+	Int32 API is deprecated as of Neko 2.0, which has native support for Int32.
 	</p>
 	</doc>
 **/

@@ -31,6 +31,9 @@
 	Give access to the popular ZLib compression library, used in several file
 	formats such as ZIP and PNG.
 	</p>
+	<p>
+	Functions need to be loaded from the [zlib.ndll] library : [$loader.loadprim("zlib@...")]
+	</p>
 	</doc>
 **/
 
