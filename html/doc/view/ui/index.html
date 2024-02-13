@@ -85,9 +85,12 @@
 	<h1>UI</h1>
 	<p>
 	Core native User Interface support. This API uses native WIN32 API on Windows,
-	Carbon API on OSX, and GTK2 on Linux.
+	Carbon API on MacOS, and GTK2 on Linux.
 	</p>
-	
+	<p>
+	Functions need to be loaded from the [ui.ndll] library : [$loader.loadprim("ui@...")]
+	</p>
+
 <doc_blk>
   <doc_type>bool</doc_type> <doc_name>ui_is_main</doc_name><doc_type>()</doc_type> <doc_doc>
 	Tells if the current thread is the main loop thread or not. The main loop thread is the one

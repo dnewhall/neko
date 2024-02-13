@@ -86,6 +86,9 @@
 	<p>
 	Regular expressions using PCRE engine.
 	</p>
+	<p>
+	Functions need to be loaded from the <doc_code>regexp.ndll</doc_code> library : <doc_code>$loader.loadprim("regexp@...")</doc_code>
+	</p>
 	
 <doc_blk>
   <doc_type>'regexp</doc_type> <doc_name>regexp_new_options</doc_name><doc_type>(reg : string, options : string)</doc_type> <doc_doc>Build a new regexpr with the following options :
@@ -122,6 +125,9 @@
   <doc_type>{ pos => int, len => int}</doc_type> <doc_name>regexp_matched_pos</doc_name><doc_type>('regexp, n : int)</doc_type> <doc_doc>Return the <doc_code>n</doc_code>th matched block position by the regexp. If <doc_code>n</doc_code> is 0 then
 	return the whole matched substring position</doc_doc>
 </doc_blk>
+<doc_blk>
+  <doc_type>int</doc_type> <doc_name>regexp_matched_num</doc_name><doc_type>('regexp)</doc_type> <doc_doc>Return the total number of matched groups, or -1 if the regexp has not been matched yet</doc></doc_doc>
+</doc_blk>	
 
 </html>
 </div>

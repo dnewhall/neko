@@ -87,6 +87,9 @@
 	Give access to the popular ZLib compression library, used in several file
 	formats such as ZIP and PNG.
 	</p>
+	<p>
+	Functions need to be loaded from the [zlib.ndll] library : [$loader.loadprim("zlib@...")]
+	</p>
 	
 <doc_blk>
   <doc_type>'dstream</doc_type> <doc_name>deflate_init</doc_name><doc_type>(level : int)</doc_type> <doc_doc>Open a compression stream with the given level of compression</doc_doc>
