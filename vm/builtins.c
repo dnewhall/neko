@@ -50,7 +50,7 @@ DEFINE_KIND(k_old_int32);
 
 /**
 	$array : any* -> array
-	<doc>Create an array from a list of values</doc>
+	<doc>Create an array from a list of values.</doc>
 **/
 static value builtin_array( value *args, int nargs ) {
 	value a = alloc_array(nargs);
@@ -62,7 +62,7 @@ static value builtin_array( value *args, int nargs ) {
 
 /**
 	$amake : n:int -> array
-	<doc>Create an array of size [n]</doc>
+	<doc>Create an array of size [n].</doc>
 **/
 static value builtin_amake( value size ) {
 	value a;
@@ -77,7 +77,7 @@ static value builtin_amake( value size ) {
 
 /**
 	$acopy : array -> array
-	<doc>Make a copy of an array</doc>
+	<doc>Make a copy of an array.</doc>
 **/
 static value builtin_acopy( value a ) {
 	int i;
@@ -91,7 +91,7 @@ static value builtin_acopy( value a ) {
 
 /**
 	$asize : array -> int
-	<doc>Return the size of an array</doc>
+	<doc>Return the size of an array.</doc>
 **/
 static value builtin_asize( value a ) {
 	val_check(a,array);
@@ -188,7 +188,7 @@ static value builtin_string( value v ) {
 
 /**
 	$smake : n:int -> string
-	<doc>Return an uninitialized string of size [n]</doc>
+	<doc>Return an uninitialized string of size [n].</doc>
 **/
 static value builtin_smake( value l ) {
 	value v;
@@ -200,7 +200,7 @@ static value builtin_smake( value l ) {
 
 /**
 	$ssize : string -> int
-	<doc>Return the size of a string</doc>
+	<doc>Return the size of a string.</doc>
 **/
 static value builtin_ssize( value s ) {
 	val_check(s,string);
@@ -209,7 +209,7 @@ static value builtin_ssize( value s ) {
 
 /**
 	$scopy : string -> string
-	<doc>Make a copy of a string</doc>
+	<doc>Make a copy of a string.</doc>
 **/
 static value builtin_scopy( value s ) {
 	val_check(s,string);
@@ -237,7 +237,7 @@ static value builtin_ssub( value s, value p, value l ) {
 
 /**
 	$sget : string -> n:int -> int?
-	<doc>Return the [n]th char of a string or [null] if out of bounds</doc>
+	<doc>Return the [n]th char of a string or [null] if out of bounds.</doc>
 **/
 static value builtin_sget( value s, value p ) {
 	int pp;
@@ -280,13 +280,13 @@ static value builtin_sset( value s, value p, value c ) {
 #	define LTB32(bits)	bits = (bits >> 24) | ((bits >> 8) & 0xFF00) | ((bits << 8) & 0xFF0000) | (bits << 24)
 
 /**
-	$sget16 : s:string -> n:int -> bigEndian:bool -> int?
+	$sget16 : s:string -> n:int -> bigendian:bool -> int?
 	<doc>
 	Return the 16-bit unsigned integer value at position [n] to [n] + 1 of string [s] or [null] if out of bounds.
-	The result is constructed as a little-endian value unless [bigEndian] is set to true.
+	The result is constructed as a little-endian value unless [bigendian] is set to true.
 	</doc>
 **/
-static value builtin_sget16( value s, value p, value bigEndian ) {
+static value builtin_sget16( value s, value p, value bigendian ) {
 	int pp;
 	unsigned short v;
 	val_check(s,string);
@@ -295,19 +295,19 @@ static value builtin_sget16( value s, value p, value bigEndian ) {
 	if( pp < 0 || pp+2 > val_strlen(s) )
 		return val_null;
 	v = *(unsigned short*)(val_string(s)+pp);
-	if( TO_BE(bigEndian) )
+	if( TO_BE(bigendian) )
 		v = ((v&0xFF) << 8) | (v>>8);
 	return alloc_int(v);
 }
 
 /**
-	$sset16 : s:string -> n:int -> val:anyint -> bigEndian:bool -> void
+	$sset16 : s:string -> n:int -> val:anyint -> bigendian:bool -> void
 	<doc>
 	Set the bytes at position [n] to [n] + 1 of string [s] to the bytes of the 16-bit unsigned integer value [val].
-	The int is stored as a little-endian value unless [bigEndian] is set to true.
+	The int is stored as a little-endian value unless [bigendian] is set to true.
 	</doc>
 **/
-static value builtin_sset16( value s, value p, value val, value bigEndian ) {
+static value builtin_sset16( value s, value p, value val, value bigendian ) {
 	int pp, v;
 	val_check(s,string);
 	val_check(p,int);
@@ -316,20 +316,20 @@ static value builtin_sset16( value s, value p, value val, value bigEndian ) {
 	if( pp < 0 || pp+2 > val_strlen(s) )
 		neko_error();
 	v = val_any_int(val);
-	if( TO_BE(bigEndian) )
+	if( TO_BE(bigendian) )
 		v = ((v&0xFF) << 8) | (v>>8);
 	*(unsigned short*)(val_string(s)+pp) = v;
 	return val_null;
 }
 
 /**
-	$sget32 : s:string -> n:int -> bigEndian:bool -> anyint?
+	$sget32 : s:string -> n:int -> bigendian:bool -> anyint?
 	<doc>
 	Return the 32-bit unsigned integer value at position [n] to [n] + 3 of string [s] or [null] if out of bounds.
-	The result is constructed as a little-endian value unless [bigEndian] is set to true.
+	The result is constructed as a little-endian value unless [bigendian] is set to true.
 	</doc>
 **/
-static value builtin_sget32( value s, value p, value bigEndian ) {
+static value builtin_sget32( value s, value p, value bigendian ) {
 	int pp;
 	unsigned int v;
 	val_check(s,string);
@@ -338,19 +338,19 @@ static value builtin_sget32( value s, value p, value bigEndian ) {
 	if( pp < 0 || pp+4 > val_strlen(s) )
 		return val_null;
 	v = *(unsigned int*)(val_string(s)+pp);
-	if( TO_BE(bigEndian) )
+	if( TO_BE(bigendian) )
 		LTB32(v);
 	return alloc_best_int(v);
 }
 
 /**
-	$sset32 : s:string -> n:int -> val:anyint -> bigEndian:bool -> void
+	$sset32 : s:string -> n:int -> val:anyint -> bigendian:bool -> void
 	<doc>
 	Set the bytes at position [n] to [n] + 3 of string [s] to the bytes of the 32-bit unsigned integer value [val].
-	The int is stored as a little-endian value unless [bigEndian] is set to true.
+	The int is stored as a little-endian value unless [bigendian] is set to true.
 	</doc>
 **/
-static value builtin_sset32( value s, value p, value val, value bigEndian ) {
+static value builtin_sset32( value s, value p, value val, value bigendian ) {
 	int pp, v;
 	val_check(s,string);
 	val_check(p,int);
@@ -359,20 +359,20 @@ static value builtin_sset32( value s, value p, value val, value bigEndian ) {
 	if( pp < 0 || pp+4 > val_strlen(s) )
 		neko_error();
 	v = val_int(val);
-	if( TO_BE(bigEndian) )
+	if( TO_BE(bigendian) )
 		LTB32(v);
 	*(unsigned int*)(val_string(s)+pp) = v;
 	return val_null;
 }
 
 /**
-	$sgetf : s:string -> n:int -> bigEndian:bool -> float?
+	$sgetf : s:string -> n:int -> bigendian:bool -> float?
 	<doc>
 	Return the single-precision float value at position [n] to [n] + 3 of string [s] of string [s] or [null] if out of bounds.
-	The result is constructed as a little-endian value unless [bigEndian] is set to true.
+	The result is constructed as a little-endian value unless [bigendian] is set to true.
 	</doc>
 **/
-static value builtin_sgetf( value s, value p, value bigEndian ) {
+static value builtin_sgetf( value s, value p, value bigendian ) {
 	int pp;
 	float f;
 	val_check(s,string);
@@ -380,7 +380,7 @@ static value builtin_sgetf( value s, value p, value bigEndian ) {
 	pp = val_int(p);
 	if( pp < 0 || pp+4 > val_strlen(s) )
 		return val_null;
-	if( TO_BE(bigEndian) ) {
+	if( TO_BE(bigendian) ) {
 		unsigned int bits;
 		bits = *(unsigned int*)(val_string(s)+pp);
 		LTB32(bits);
@@ -391,13 +391,13 @@ static value builtin_sgetf( value s, value p, value bigEndian ) {
 }
 
 /**
-	$ssetf : s:string -> n:int -> val:float -> bigEndian:bool -> void
+	$ssetf : s:string -> n:int -> val:float -> bigendian:bool -> void
 	<doc>
 	Set the bytes at position [n] to [n] + 3 of string [s] to the bytes of the single-precision float value [val].
-	The float is stored as a little-endian value unless [bigEndian] is set to true.
+	The float is stored as a little-endian value unless [bigendian] is set to true.
   </doc>
 **/
-static value builtin_ssetf( value s, value p, value val, value bigEndian ) {
+static value builtin_ssetf( value s, value p, value val, value bigendian ) {
 	int pp;
 	float f;
 	val_check(s,string);
@@ -407,7 +407,7 @@ static value builtin_ssetf( value s, value p, value val, value bigEndian ) {
 	if( pp < 0 || pp+4 > val_strlen(s) )
 		neko_error();
 	f = (float)val_float(val);
-	if( TO_BE(bigEndian) ) {
+	if( TO_BE(bigendian) ) {
 		unsigned int bits = *(unsigned int *)&f;
 		LTB32(bits);
 		*(unsigned int*)(val_string(s)+pp) = bits;
@@ -417,13 +417,13 @@ static value builtin_ssetf( value s, value p, value val, value bigEndian ) {
 }
 
 /**
-	$sgetd : s:string -> n:int -> bigEndian:bool -> float?
+	$sgetd : s:string -> n:int -> bigendian:bool -> float?
 	<doc>
 	Return the double-precision float value at position [n] to [n] + 7 of string [s] or [null] if out of bounds.
-	The result is constructed as a little-endian value unless [bigEndian] is set to true.
+	The result is constructed as a little-endian value unless [bigendian] is set to true.
 </doc>
 **/
-static value builtin_sgetd( value s, value p, value bigEndian ) {
+static value builtin_sgetd( value s, value p, value bigendian ) {
 	int pp;
 	double f;
 	val_check(s,string);
@@ -431,7 +431,7 @@ static value builtin_sgetd( value s, value p, value bigEndian ) {
 	pp = val_int(p);
 	if( pp < 0 || pp+8 > val_strlen(s) )
 		return val_null;
-	if( TO_BE(bigEndian) ) {
+	if( TO_BE(bigendian) ) {
 		const unsigned char *p = (unsigned char*)(val_string(s) + pp);
 		union {
 			unsigned char bytes[8];
@@ -452,13 +452,13 @@ static value builtin_sgetd( value s, value p, value bigEndian ) {
 }
 
 /**
-	$ssetd : s:string -> n:int -> val:float -> bigEndian:bool -> void
+	$ssetd : s:string -> n:int -> val:float -> bigendian:bool -> void
 	<doc>
   Set the bytes at position [n] to [n] + 7 of string [s] to the bytes of the double-precision float [val].
-  The float is stored as a little-endian value unless [bigEndian] is set to true.
+  The float is stored as a little-endian value unless [bigendian] is set to true.
   </doc>
 **/
-static value builtin_ssetd( value s, value p, value val, value bigEndian ) {
+static value builtin_ssetd( value s, value p, value val, value bigendian ) {
 	int pp;
 	double f;
 	val_check(s,string);
@@ -468,7 +468,7 @@ static value builtin_ssetd( value s, value p, value val, value bigEndian ) {
 	if( pp < 0 || pp+8 > val_strlen(s) )
 		neko_error();
 	f = (double)val_float(val);
-	if( TO_BE(bigEndian) ) {
+	if( TO_BE(bigendian) ) {
 		unsigned char *p = (unsigned char*)(val_string(s) + pp);
 		union {
 			unsigned char bytes[8];
@@ -489,37 +489,37 @@ static value builtin_ssetd( value s, value p, value val, value bigEndian ) {
 }
 
 /**
-	$itof : anyint -> bigEndian:bool -> float
+	$itof : anyint -> bigendian:bool -> float
 	<doc>
   Returns the binary float representation of the integer value.
-  The result is constructed as a little-endian value unless [bigEndian] is set to true.
+  The result is constructed as a little-endian value unless [bigendian] is set to true.
   </doc>
 **/
-static value builtin_itof( value v, value bigEndian ) {
+static value builtin_itof( value v, value bigendian ) {
 	int bits;
 	float f;
 	val_check(v,any_int);
 	bits = val_any_int(v);
-	if( TO_BE(bigEndian) )
+	if( TO_BE(bigendian) )
 		LTB32(bits);
 	f = *(float*)&bits;
 	return alloc_float(f);
 }
 
 /**
-	$ftoi : float -> bigEndian:bool -> anyint
+	$ftoi : float -> bigendian:bool -> anyint
 	<doc>
   Returns the binary integer representation of the float value.
-  The result is constructed as a little-endian value unless [bigEndian] is set to true.
+  The result is constructed as a little-endian value unless [bigendian] is set to true.
   </doc>
 **/
-static value builtin_ftoi( value v, value bigEndian ) {
+static value builtin_ftoi( value v, value bigendian ) {
 	int bits;
 	float f;
 	val_check(v,float);
 	f = (float)val_float(v);
 	bits = *(int *)&f;
-	if( TO_BE(bigEndian) )
+	if( TO_BE(bigendian) )
 		LTB32(bits);
 	return alloc_best_int(bits);
 }
@@ -528,17 +528,17 @@ static value builtin_ftoi( value v, value bigEndian ) {
 	$itod : low:anyint -> high:anyint -> float
 	<doc>
 	Convert the two integers to the corresponding double-precision float value.
-	The result is constructed as a little-endian value unless [bigEndian] is set to true.
+	The result is constructed as a little-endian value unless [bigendian] is set to true.
 	</doc>
 **/
-static value builtin_itod( value low, value high, value bigEndian ) {
+static value builtin_itod( value low, value high, value bigendian ) {
 	union {
 		unsigned int i[2];
 		double d;
 	} s;
 	val_check(low,any_int);
 	val_check(high,any_int)
-	if( TO_BE(bigEndian) ) {
+	if( TO_BE(bigendian) ) {
 		unsigned int bits;
 		bits = val_any_int(low);
 		LTB32(bits);
@@ -554,13 +554,13 @@ static value builtin_itod( value low, value high, value bigEndian ) {
 }
 
 /**
-	$dtoi : float -> anyint array -> bigEndian:bool -> void
+	$dtoi : float -> anyint array -> bigendian:bool -> void
 	<doc>
 	Save the byte representation of the double-precision float value into the array as two ints.
-	The float is constructed as a little-endian value unless [bigEndian] is set to true.
+	The float is constructed as a little-endian value unless [bigendian] is set to true.
   </doc>
 **/
-static value builtin_dtoi( value v, value out, value bigEndian ) {
+static value builtin_dtoi( value v, value out, value bigendian ) {
 	union {
 		unsigned int i[2];
 		double d;
@@ -570,7 +570,7 @@ static value builtin_dtoi( value v, value out, value bigEndian ) {
 	if( val_array_size(out) < 2 )
 		neko_error();
 	s.d = val_float(v);
-	if( TO_BE(bigEndian) ) {
+	if( TO_BE(bigendian) ) {
 		unsigned int bits;
 		bits = s.i[0];
 		LTB32(bits);
