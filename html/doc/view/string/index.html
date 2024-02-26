@@ -87,27 +87,29 @@
 	</p>
 	
 <doc_blk>
-  <doc_type>string list</doc_type> <doc_name>string_split</doc_name><doc_type>(s : string, sep : string)</doc_type> <doc_doc>split the string <doc_code>s</doc_code> using separator <doc_code>sep</doc_code></doc_doc>
+  <doc_type>string list</doc_type> <doc_name>string_split</doc_name><doc_type>(s : string, sep : string)</doc_type> <doc_doc>Split the string <doc_code>s</doc_code> using separator <doc_code>sep</doc_code>.</doc_doc>
 </doc_blk>
 <doc_blk>
   <doc_type>string</doc_type> <doc_name>sprintf</doc_name><doc_type>(fmt : string, params : (any | array))</doc_type> <doc_doc>
-	Format a string. If only one parameter is needed then it can be 
-	directly passed, either the parameters need to be stored in an array.
-	The following formats are accepted (with corresponding types) :
+	Return a string formatted using the pattern in <doc_code>fmt</doc_code>.
+	If only one parameter is needed, then it can be passed directly,
+	otherwise, the parameters need to be stored in an array.
+	The following format specifiers are accepted (with corresponding types) :
 	<ul>
-		<li><doc_code>%s</doc_code> : string</li>
-		<li><doc_code>%d</doc_code> <doc_code>%x</doc_code> <doc_code>%X</doc_code> : int</li>
-		<li><doc_code>%c</doc_code> : int in the 0..255 range</li>
-		<li><doc_code>%b</doc_code> : bool</li>
-		<li><doc_code>%f</doc_code> : float</li>
+		<li><doc_code>%s</doc_code> : <doc_code>string</doc_code> : the contents of the string</li>
+		<li><doc_code>%d</doc_code> : <doc_code>int</doc_code> : the integer value</li>
+		<li><doc_code>%x</doc_code> <doc_code>%X</doc_code> : <doc_code>int</doc_code> : the integer value in hexadecimal notation</li>
+		<li><doc_code>%c</doc_code> : <doc_code>int</doc_code> in the 0..255 range : the ASCII character represented by that byte</li>
+		<li><doc_code>%b</doc_code> : <doc_code>bool</doc_code> : <doc_code>true<doc_code> or <doc_code>false<doc_code></li>
+		<li><doc_code>%f</doc_code> : <doc_code>float</doc_code> : the floating-point value</li>
 	</ul>
 	</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>string</doc_type> <doc_name>url_decode</doc_name><doc_type>(string)</doc_type> <doc_doc>Decode an url using escaped format</doc_doc>
+  <doc_type>string</doc_type> <doc_name>url_decode</doc_name><doc_type>(string)</doc_type> <doc_doc>Decode a URL that is in the percent-escaped format.</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>string</doc_type> <doc_name>url_encode</doc_name><doc_type>(string)</doc_type> <doc_doc>Encode an url using escaped format</doc_doc>
+  <doc_type>string</doc_type> <doc_name>url_encode</doc_name><doc_type>(string)</doc_type> <doc_doc>Encode a URL into the percent-escaped format.</doc_doc>
 </doc_blk>
 <doc_blk>
   <doc_type>string</doc_type> <doc_name>base_encode</doc_name><doc_type>(s : string, base : string)</doc_type> <doc_doc>

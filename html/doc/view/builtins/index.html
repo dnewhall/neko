@@ -88,16 +88,16 @@
 	
 <h2 id="array">Array Builtins</h2>
 <doc_blk>
-  <doc_type>array</doc_type> <doc_name>$array</doc_name><doc_type>(any*)</doc_type> <doc_doc>Create an array from a list of values</doc_doc>
+  <doc_type>array</doc_type> <doc_name>$array</doc_name><doc_type>(any*)</doc_type> <doc_doc>Create an array from a list of values.</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>array</doc_type> <doc_name>$amake</doc_name><doc_type>(n : int)</doc_type> <doc_doc>Create an array of size <doc_code>n</doc_code></doc_doc>
+  <doc_type>array</doc_type> <doc_name>$amake</doc_name><doc_type>(n : int)</doc_type> <doc_doc>Create an array of size <doc_code>n</doc_code>.</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>array</doc_type> <doc_name>$acopy</doc_name><doc_type>(array)</doc_type> <doc_doc>Make a copy of an array</doc_doc>
+  <doc_type>array</doc_type> <doc_name>$acopy</doc_name><doc_type>(array)</doc_type> <doc_doc>Make a copy of an array.</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>int</doc_type> <doc_name>$asize</doc_name><doc_type>(array)</doc_type> <doc_doc>Return the size of an array</doc_doc>
+  <doc_type>int</doc_type> <doc_name>$asize</doc_name><doc_type>(array)</doc_type> <doc_doc>Return the size of an array.</doc_doc>
 </doc_blk>
 <doc_blk>
   <doc_type>array</doc_type> <doc_name>$asub</doc_name><doc_type>(array, p : int, l : int)</doc_type> <doc_doc>
@@ -121,13 +121,13 @@
   <doc_type>string</doc_type> <doc_name>$string</doc_name><doc_type>(any)</doc_type> <doc_doc>Convert any value to a string. This will make a copy of string.</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>string</doc_type> <doc_name>$smake</doc_name><doc_type>(n : int)</doc_type> <doc_doc>Return an uninitialized string of size <doc_code>n</doc_code></doc_doc>
+  <doc_type>string</doc_type> <doc_name>$smake</doc_name><doc_type>(n : int)</doc_type> <doc_doc>Return an uninitialized string of size <doc_code>n</doc_code>.</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>int</doc_type> <doc_name>$ssize</doc_name><doc_type>(string)</doc_type> <doc_doc>Return the size of a string</doc_doc>
+  <doc_type>int</doc_type> <doc_name>$ssize</doc_name><doc_type>(string)</doc_type> <doc_doc>Return the size of a string.</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>string</doc_type> <doc_name>$scopy</doc_name><doc_type>(string)</doc_type> <doc_doc>Make a copy of a string</doc_doc>
+  <doc_type>string</doc_type> <doc_name>$scopy</doc_name><doc_type>(string)</doc_type> <doc_doc>Make a copy of a string.</doc_doc>
 </doc_blk>
 <doc_blk>
   <doc_type>string</doc_type> <doc_name>$ssub</doc_name><doc_type>(string, p : int, l : int)</doc_type> <doc_doc>
@@ -136,7 +136,7 @@
 	</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>int?</doc_type> <doc_name>$sget</doc_name><doc_type>(string, n : int)</doc_type> <doc_doc>Return the <doc_code>n</doc_code>th char of a string or <doc_code>null</doc_code> if out of bounds</doc_doc>
+  <doc_type>int?</doc_type> <doc_name>$sget</doc_name><doc_type>(string, n : int)</doc_type> <doc_doc>Return the <doc_code>n</doc_code>th char of a string or <doc_code>null</doc_code> if out of bounds.</doc_doc>
 </doc_blk>
 <doc_blk>
   <doc_type>int?</doc_type> <doc_name>$sset</doc_name><doc_type>(string, n : int, c : int)</doc_type> <doc_doc>
@@ -145,71 +145,71 @@
 	</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>int?</doc_type> <doc_name>$sget16</doc_name><doc_type>(s : string, n : int, bigEndian : bool)</doc_type> <doc_doc>
+  <doc_type>int?</doc_type> <doc_name>$sget16</doc_name><doc_type>(s : string, n : int, bigendian : bool)</doc_type> <doc_doc>
 	Return the 16-bit unsigned integer value at position <doc_code>n</doc_code> to <doc_code>n</doc_code> + 1 of string <doc_code>s</doc_code> or <doc_code>null</doc_code> if out of bounds.
-	The result is constructed as a little-endian value unless <doc_code>bigEndian</doc_code> is set to true.
+	The result is constructed as a little-endian value unless <doc_code>bigendian</doc_code> is set to true.
 	</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>void</doc_type> <doc_name>$sset16</doc_name><doc_type>(s : string, n : int, bigEndian : bool)</doc_type> <doc_doc>
+  <doc_type>void</doc_type> <doc_name>$sset16</doc_name><doc_type>(s : string, n : int, bigendian : bool)</doc_type> <doc_doc>
 	Set the bytes at position <doc_code>n</doc_code> to <doc_code>n</doc_code> + 1 of string <doc_code>s</doc_code> to the bytes of the 16-bit unsigned integer value <doc_code>val</doc_code>.
-	The int is stored as a little-endian value unless <doc_code>bigEndian</doc_code> is set to true.
+	The int is stored as a little-endian value unless <doc_code>bigendian</doc_code> is set to true.
 	</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>int?</doc_type> <doc_name>$sget32</doc_name><doc_type>(s : string, n : int, bigEndian : bool)</doc_type> <doc_doc>
+  <doc_type>int?</doc_type> <doc_name>$sget32</doc_name><doc_type>(s : string, n : int, bigendian : bool)</doc_type> <doc_doc>
 	Return the 32-bit unsigned integer value at position <doc_code>n</doc_code> to <doc_code>n</doc_code> + 3 of string <doc_code>s</doc_code> or <doc_code>null</doc_code> if out of bounds.
-	The result is constructed as a little-endian value unless <doc_code>bigEndian</doc_code> is set to true.
+	The result is constructed as a little-endian value unless <doc_code>bigendian</doc_code> is set to true.
 	</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>void</doc_type> <doc_name>$sset32</doc_name><doc_type>(s : string, n : int, bigEndian : bool)</doc_type> <doc_doc>
+  <doc_type>void</doc_type> <doc_name>$sset32</doc_name><doc_type>(s : string, n : int, bigendian : bool)</doc_type> <doc_doc>
 	Set the bytes at position <doc_code>n</doc_code> to <doc_code>n</doc_code> + 3 of string <doc_code>s</doc_code> to the bytes of the 32-bit unsigned integer value <doc_code>val</doc_code>.
-	The int is stored as a little-endian value unless <doc_code>bigEndian</doc_code> is set to true.
+	The int is stored as a little-endian value unless <doc_code>bigendian</doc_code> is set to true.
 	</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>float?</doc_type> <doc_name>$sgetf</doc_name><doc_type>(s : string, n : int, bigEndian : bool)</doc_type> <doc_doc>
+  <doc_type>float?</doc_type> <doc_name>$sgetf</doc_name><doc_type>(s : string, n : int, bigendian : bool)</doc_type> <doc_doc>
 	Return the single-precision float value at position <doc_code>n</doc_code> to <doc_code>n</doc_code> + 3 of string <doc_code>s</doc_code> or <doc_code>null</doc_code> if out of bounds.
-	The result is constructed as a little-endian value unless <doc_code>bigEndian</doc_code> is set to true.
+	The result is constructed as a little-endian value unless <doc_code>bigendian</doc_code> is set to true.
 	</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>void</doc_type> <doc_name>$ssetf</doc_name><doc_type>(s : string, n : int, val : float, bigEndian : bool)</doc_type> <doc_doc>
+  <doc_type>void</doc_type> <doc_name>$ssetf</doc_name><doc_type>(s : string, n : int, val : float, bigendian : bool)</doc_type> <doc_doc>
 	Set the bytes at position <doc_code>n</doc_code> to <doc_code>n</doc_code> + 3 of string <doc_code>s</doc_code> to the bytes of the single-precision float value.
-	The float is stored as a little-endian value unless <doc_code>bigEndian</doc_code> is set to true.
+	The float is stored as a little-endian value unless <doc_code>bigendian</doc_code> is set to true.
 	</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>float?</doc_type> <doc_name>$sgetd</doc_name><doc_type>(s : string, n : int, bigEndian : bool)</doc_type> <doc_doc>
+  <doc_type>float?</doc_type> <doc_name>$sgetd</doc_name><doc_type>(s : string, n : int, bigendian : bool)</doc_type> <doc_doc>
 	Return the double-precision float value at position <doc_code>n</doc_code> to <doc_code>n</doc_code> + 7 of string <doc_code>s</doc_code> or <doc_code>null</doc_code> if out of bounds.
-	The result is constructed as a little-endian value unless <doc_code>bigEndian</doc_code> is set to true.
+	The result is constructed as a little-endian value unless <doc_code>bigendian</doc_code> is set to true.
 	</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>void</doc_type> <doc_name>$ssetd</doc_name><doc_type>(s : string, n : int, val : float, bigEndian : bool)</doc_type> <doc_doc>
+  <doc_type>void</doc_type> <doc_name>$ssetd</doc_name><doc_type>(s : string, n : int, val : float, bigendian : bool)</doc_type> <doc_doc>
 	Set the bytes at position <doc_code>n</doc_code> to <doc_code>n</doc_code> + 7 of string <doc_code>s</doc_code> to the bytes of the double-precision float <doc_code>val<doc_code>.
-	The float is treated as a little-endian value unless <doc_code>bigEndian<doc_code> is set to true.
+	The float is treated as a little-endian value unless <doc_code>bigendian<doc_code> is set to true.
 </doc_blk>
 <doc_blk>
-  <doc_type>float</doc_type> <doc_name>$itof</doc_name><doc_type>(int, bigEndian : bool)</doc_type> <doc_doc>
+  <doc_type>float</doc_type> <doc_name>$itof</doc_name><doc_type>(int, bigendian : bool)</doc_type> <doc_doc>
 	Returns the binary float representation of the integer value.
-	The result is constructed as a little-endian value unless <doc_code>bigEndian </doc_code> is set to true.
+	The result is constructed as a little-endian value unless <doc_code>bigendian </doc_code> is set to true.
 </doc_blk>
 <doc_blk>
-  <doc_type>int</doc_type> <doc_name>$ftoi</doc_name><doc_type>(float, bigEndian : bool)</doc_type> <doc_doc>
+  <doc_type>int</doc_type> <doc_name>$ftoi</doc_name><doc_type>(float, bigendian : bool)</doc_type> <doc_doc>
 	Returns the binary integer representaion of the float value.
-	The result is constructed as a little-endian value unless <doc_code>bigEndian </doc_code> is set to true.
+	The result is constructed as a little-endian value unless <doc_code>bigendian </doc_code> is set to true.
 </doc_blk>
 <doc_blk>
-  <doc_type>float</doc_type> <doc_name>$itod</doc_name><doc_type>(low : int, high : int, bigEndian : bool)</doc_type> <doc_doc>
+  <doc_type>float</doc_type> <doc_name>$itod</doc_name><doc_type>(low : int, high : int, bigendian : bool)</doc_type> <doc_doc>
 	Convert the two integers to the corresponding double-precision float value.
-	The result is constructed as a little-endian value unless <doc_code>bigEndian </doc_code> is set to true.
+	The result is constructed as a little-endian value unless <doc_code>bigendian </doc_code> is set to true.
 </doc_blk>
 <doc_blk>
   <doc_type>void</doc_type> <doc_name>$dtoi</doc_name><doc_type>(float, array, bool)</doc_type> <doc_doc>
 	Save the byte representation of the double-precision value into the array as two ints.
-	The float is treated as a little-endian value unless [bigEndian] is set to true.
+	The float is treated as a little-endian value unless [bigendian] is set to true.
 </doc_blk>
 <doc_blk>
   <doc_type>bool</doc_type> <doc_name>$isbigendian</doc_name><doc_type>()</doc_type> <doc_doc>Tells if we are on a big-endian CPU or not.</doc_doc>

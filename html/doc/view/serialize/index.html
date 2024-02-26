@@ -93,15 +93,15 @@
 	exception when deserializing if the function offset in the bytecode has changed.
 	</p>
 	<p>
-	You can define the __serialize method of an object. When this method is found when
+	You can define the <doc_code>__serialize</doc_code> method of an object. When this method is found when
 	serializing the object, it is called with no arguments and its return value will be
 	serialized. The name of the module the method is declared in will also be serialized.
-	When unserializing, the module is loaded and its __unserialize exported function is
-	called with the value that was returned by __serialize.
+	When unserializing, the module is loaded and its <doc_code>__unserialize</doc_code> exported function is
+	called with the value that was returned by <doc_code>__serialize</doc_code>.
 	</p>
 	
 <doc_blk>
-  <doc_type>string</doc_type> <doc_name>serialize</doc_name><doc_type>(any)</doc_type> <doc_doc>Serialize any value recursively</doc_doc>
+  <doc_type>string</doc_type> <doc_name>serialize</doc_name><doc_type>(any)</doc_type> <doc_doc>Serialize any value recursively.</doc_doc>
 </doc_blk>
 <doc_blk>
   <doc_type>any</doc_type> <doc_name>unserialize</doc_name><doc_type>(string, #loader)</doc_type> <doc_doc>Unserialize a stored value.
