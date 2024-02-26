@@ -62,7 +62,7 @@ DEFINE_KIND(k_process);
 	<doc>
 	<h1>Process</h1>
 	<p>
-	An API for starting and communication with sub processes.
+	An API for starting and communicating with sub processes.
 	</p>
 	</doc>
 **/
@@ -96,10 +96,10 @@ static void free_process( value vp ) {
 	process_run : cmd:string -> args:string array -> 'process
 	<doc>
 	Start a process using a command and the specified arguments.
-	When args is not null, cmd and args will be auto-quoted/escaped.
+	When [args] is not null, [cmd] and [args] will be auto-quoted/escaped.
 	If no auto-quoting/escaping is desired, you should append necessary
-	arguments to cmd as if it is inputted to the shell directly, and pass
-	null as args.
+	arguments to [cmd] as if inputted to the shell directly, and pass
+	null as [args].
 	</doc>
 **/
 static value process_run( value cmd, value vargs ) {
@@ -173,7 +173,7 @@ static value process_run( value cmd, value vargs ) {
 		}
 		sargs = buffer_to_string(b);
 		p = (vprocess*)alloc_private(sizeof(vprocess));
-		// startup process
+		// Startup process
 		sattr.nLength = sizeof(sattr);
 		sattr.bInheritHandle = TRUE;
 		sattr.lpSecurityDescriptor = NULL;
@@ -192,7 +192,7 @@ static value process_run( value cmd, value vargs ) {
 		CloseHandle(iwrite);
 		if( !CreateProcess(NULL,val_string(sargs),NULL,NULL,TRUE,0,NULL,NULL,&sinf,&p->pinf) )
 			neko_error();
-		// close unused pipes
+		// Close unused pipes
 		CloseHandle(sinf.hStdOutput);
 		CloseHandle(sinf.hStdError);
 		CloseHandle(sinf.hStdInput);
@@ -270,9 +270,9 @@ static value process_run( value cmd, value vargs ) {
 /**
 	process_stdout_read : 'process -> buf:string -> pos:int -> len:int -> int
 	<doc>
-	Read up to [len] bytes in [buf] starting at [pos] from the process stdout.
-	Returns the number of bytes readed this way. Raise an exception if this
-	process stdout is closed and no more data is available for reading.
+	Read up to [len] bytes in [buf] starting at [pos] from the process' stdout.
+	Returns the number of bytes read this way. Raise an exception if this
+	process' stdout is closed and no more data is available for reading.
 	</doc>
 **/
 static value process_stdout_read( value vp, value str, value pos, value len ) {
@@ -301,9 +301,9 @@ static value process_stdout_read( value vp, value str, value pos, value len ) {
 /**
 	process_stderr_read : 'process -> buf:string -> pos:int -> len:int -> int
 	<doc>
-	Read up to [len] bytes in [buf] starting at [pos] from the process stderr.
-	Returns the number of bytes readed this way. Raise an exception if this
-	process stderr is closed and no more data is available for reading.
+	Read up to [len] bytes in [buf] starting at [pos] from the process' stderr.
+	Returns the number of bytes read this way. Raise an exception if this
+	process' stderr is closed and no more data is available for reading.
 	</doc>
 **/
 static value process_stderr_read( value vp, value str, value pos, value len ) {
@@ -332,9 +332,9 @@ static value process_stderr_read( value vp, value str, value pos, value len ) {
 /**
 	process_stdin_write : 'process -> buf:string -> pos:int -> len:int -> int
 	<doc>
-	Write up to [len] bytes from [buf] starting at [pos] to the process stdin.
-	Returns the number of bytes writen this way. Raise an exception if this
-	process stdin is closed.
+	Write up to [len] bytes from [buf] starting at [pos] to the process' stdin.
+	Returns the number of bytes written this way. Raise an exception if this
+	process' stdin is closed.
 	</doc>
 **/
 static value process_stdin_write( value vp, value str, value pos, value len ) {
@@ -361,7 +361,7 @@ static value process_stdin_write( value vp, value str, value pos, value len ) {
 /**
 	process_stdin_close : 'process -> void
 	<doc>
-	Close the process standard input.
+	Close the process' standard input.
 	</doc>
 **/
 static value process_stdin_close( value vp ) {
@@ -382,7 +382,7 @@ static value process_stdin_close( value vp ) {
 /**
 	process_exit : 'process -> int
 	<doc>
-	Wait until the process terminate, then returns its exit code.
+	Wait until the process terminates, then return its exit code.
 	</doc>
 **/
 static value process_exit( value vp ) {
@@ -420,7 +420,7 @@ static value process_exit( value vp ) {
 /**
 	process_pid : 'process -> int
 	<doc>
-	Returns the process id.
+	Return the process' PID (process identifier).
 	</doc>
 **/
 static value process_pid( value vp ) {
@@ -437,7 +437,7 @@ static value process_pid( value vp ) {
 /**
 	process_close : 'process -> void
 	<doc>
-	Close the process I/O.
+	Close the process' I/O.
 	</doc>
 **/
 static value process_close( value vp ) {

@@ -119,7 +119,7 @@ static field f_port;
 	<doc>
 	<h1>Socket</h1>
 	<p>
-	TCP and UDP sockets
+	Support for TCP and UDP sockets and host/IP address lookup.
 	</p>
 	</doc>
 **/
@@ -158,7 +158,7 @@ static value socket_init() {
 
 /**
 	socket_new : udp:bool -> 'socket
-	<doc>Create a new socket, TCP or UDP</doc>
+	<doc>Create a new socket. Socket is for TCP if [udp] is false or UDP if it is true.</doc>
 **/
 static value socket_new( value udp ) {
 	SOCKET s;
@@ -184,7 +184,7 @@ static value socket_new( value udp ) {
 
 /**
 	socket_close : 'socket -> void
-	<doc>Close a socket. Any subsequent operation on this socket will fail</doc>
+	<doc>Close a socket. Any subsequent operation on this socket will fail.</doc>
 **/
 static value socket_close( value o ) {
 	val_check_kind(o,k_socket);
@@ -250,7 +250,7 @@ static void tmp_recv( void *_t ) {
 /**
 	socket_recv : 'socket -> buf:string -> pos:int -> len:int -> int
 	<doc>Read up to [len] bytes from [buf] starting at [pos] from a connected socket.
-	Return the number of bytes readed.</doc>
+	Returns the number of bytes read.</doc>
 **/
 static value socket_recv( value o, value data, value pos, value len ) {
 	int p,l,dlen,ret;
@@ -312,7 +312,7 @@ static value socket_recv_char( value o ) {
 
 /**
 	socket_write : 'socket -> string -> void
-	<doc>Send the whole content of a string over a connected socket.</doc>
+	<doc>Send the entire contents of a string over a connected socket.</doc>
 **/
 static value socket_write( value o, value data ) {
 	const char *cdata;
@@ -337,8 +337,8 @@ static value socket_write( value o, value data ) {
 
 /**
 	socket_read : 'socket -> string
-	<doc>Read the whole content of a the data available from a socket until the connection close.
-	If the socket hasn't been close by the other side, the function might block.
+	<doc>Read all of the data available from a socket until the connection closes.
+	If the socket hasn't been closed by the other side, the function might block.
 	</doc>
 **/
 static value socket_read( value o ) {
@@ -432,7 +432,7 @@ static value host_local() {
 
 /**
 	socket_connect : 'socket -> host:'int32 -> port:int -> void
-	<doc>Connect the socket the given [host] and [port]</doc>
+	<doc>Connect the socket to the given [host] and [port].</doc>
 **/
 static value socket_connect( value o, value host, value port ) {
 	struct sockaddr_in addr;
@@ -450,7 +450,7 @@ static value socket_connect( value o, value host, value port ) {
 
 /**
 	socket_listen : 'socket -> int -> void
-	<doc>Listen for a number of connections</doc>
+	<doc>Listen for a number of connections.</doc>
 **/
 static value socket_listen( value o, value n ) {
 	val_check_kind(o,k_socket);
@@ -508,7 +508,7 @@ static void init_timeval( tfloat f, struct timeval *t ) {
 
 /**
 	socket_select : read : 'socket array -> write : 'socket array -> others : 'socket array -> timeout:number? -> 'socket array array
-	<doc>Perform the [select] operation. Timeout is in seconds or [null] if infinite</doc>
+	<doc>Perform the [select] operation. Timeout is in seconds or [null] if infinite.</doc>
 **/
 static value socket_select( value rs, value ws, value es, value timeout ) {
 	struct timeval tval;
@@ -543,7 +543,7 @@ static value socket_select( value rs, value ws, value es, value timeout ) {
 
 /**
 	socket_bind : 'socket -> host : 'int32 -> port:int -> void
-	<doc>Bind the socket for server usage on the given host and port</doc>
+	<doc>Bind the socket for server usage on the given [host] and [port].</doc>
 **/
 static value socket_bind( value o, value host, value port ) {
 	int opt = 1;
@@ -565,7 +565,7 @@ static value socket_bind( value o, value host, value port ) {
 
 /**
 	socket_accept : 'socket -> 'socket
-	<doc>Accept an incoming connection request</doc>
+	<doc>Accept an incoming connection request.</doc>
 **/
 static value socket_accept( value o ) {
 	struct sockaddr_in addr;
@@ -583,7 +583,7 @@ static value socket_accept( value o ) {
 
 /**
 	socket_peer : 'socket -> #address
-	<doc>Return the socket connected peer address composed of an (host,port) array</doc>
+	<doc>Return the socket connected peer address composed as a (host, port) array.</doc>
 **/
 static value socket_peer( value o ) {
 	struct sockaddr_in addr;
@@ -600,7 +600,7 @@ static value socket_peer( value o ) {
 
 /**
 	socket_host : 'socket -> #address
-	<doc>Return the socket local address composed of an (host,port) array</doc>
+	<doc>Return the socket local address composed as a (host, port) array.</doc>
 **/
 static value socket_host( value o ) {
 	struct sockaddr_in addr;
@@ -617,7 +617,7 @@ static value socket_host( value o ) {
 
 /**
 	socket_set_timeout : 'socket -> timout:number? -> void
-	<doc>Set the socket send and recv timeout in seconds to the given value (or null for blocking)</doc>
+	<doc>Set the socket [send] and [recv] timeout in seconds to the given value (or null for blocking).</doc>
 **/
 static value socket_set_timeout( value o, value t ) {
 #ifdef NEKO_WINDOWS
@@ -693,7 +693,7 @@ static value socket_set_blocking( value o, value b ) {
 
 /**
 	socket_poll_alloc : int -> 'poll
-	<doc>Allocate memory to perform polling on a given number of sockets</doc>
+	<doc>Allocate memory to perform polling on a given number of sockets.</doc>
 **/
 static value socket_poll_alloc( value nsocks ) {
 	polldata *p;
@@ -868,7 +868,7 @@ static value socket_poll( value socks, value pdata, value timeout ) {
 /**
 	socket_set_fast_send : 'socket -> bool -> void
 	<doc>
-	Disable or enable to TCP_NODELAY flag for the socket
+	Disable or enable the TCP_NODELAY flag for the socket.
 	</doc>
 **/
 static value socket_set_fast_send( value s, value f ) {
@@ -884,7 +884,7 @@ static value socket_set_fast_send( value s, value f ) {
 /**
 	socket_set_broadcast : 'socket -> bool -> void
 	<doc>
-	Disable or enable broadcast option flag "SO_BROADCAST" for the socket
+	Disable or enable broadcast option flag SO_BROADCAST for the socket.
 	</doc>
 **/
 static value socket_set_broadcast( value s, value f ) {
@@ -937,7 +937,7 @@ static value socket_send_to( value o, value data, value pos, value len, value va
 /**
 	socket_recv_from : 'socket -> buf:string -> pos:int -> length:int -> addr:{host:'int32,port:int} -> int
 	<doc>
-	Read data from an unconnected UDP socket, store the address from which we received data in addr.
+	Read data from an unconnected UDP socket, store the address from which we received data in [addr].
 	</doc>
 **/
 static value socket_recv_from( value o, value data, value pos, value len, value addr ) {
@@ -982,7 +982,9 @@ static value socket_recv_from( value o, value data, value pos, value len, value 
 /**
 	socket_set_keepalive : 'socket -> bool -> time:int? -> interval:int? -> void
 	<doc>
-	Enable or disable TCP_KEEPALIVE flag for the socket
+	Enable or disable TCP_KEEPALIVE flag for the socket.
+	You can set the idle time with [time] and [interval] : [time] is the time in seconds that an idle connection will wait before closing, [interval] is the time in seconds between keep-alive tests.
+	If not specified, the default values are operating system specific.
 	</doc>
 **/
 static value socket_set_keepalive( value o, value b, value time, value interval ) {
@@ -1035,7 +1037,7 @@ static value socket_set_keepalive( value o, value b, value time, value interval 
 	<doc>
 	Allocate memory for edge/level-triggered polling (epoll).
 
-	On Linux, this will use epoll; on other systems, this will fall back to select.
+	On Linux, this will use [epoll]; on other systems, this will fall back to [select].
 	</doc>
 **/
 static value socket_epoll_alloc(value maxevents) {
@@ -1058,7 +1060,7 @@ static value socket_epoll_alloc(value maxevents) {
 
 /**
 	socket_epoll_register : 'epoll -> 'socket -> int
-	<doc>Register a socket with an epoll instance to be notified of events. Returns the socket's fd.</doc>
+	<doc>Register a socket with an epoll instance to be notified of events. Returns the socket's file descriptor.</doc>
 **/
 static value socket_epoll_register(value e, value s, value events) {
 	SOCKET sock;
@@ -1096,7 +1098,7 @@ static value socket_epoll_register(value e, value s, value events) {
 
 /**
 	socket_epoll_unregister : 'epoll -> 'socket -> int
-	<doc>Unegister a socket with an epoll instance. Returns the socket's fd.</doc>
+	<doc>Unegister a socket with an epoll instance. Returns the socket's file descriptor.</doc>
 **/
 static value socket_epoll_unregister(value e, value s) {
 	SOCKET sock;
@@ -1138,8 +1140,8 @@ static value socket_epoll_unregister(value e, value s) {
 }
 
 /**
-	socket_epoll_wait : 'epoll -> int -> float -> int array
-	<doc>Wait and return a list of socket fds with events.</doc>
+	socket_epoll_wait : 'epoll -> timeout:float -> int array
+	<doc>Waits for an event on any of the registered connections, and then returns a list of the socket file descriptors with active events.</doc>
 **/
 static value socket_epoll_wait(value e, value timeout) {
 	epolldata *ep;

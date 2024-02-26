@@ -34,7 +34,7 @@
 /**
 	<doc>
 	<h1>Random</h1>
-	<p>A seeded pseudo-random generator</p>
+	<p>A seeded pseudo-random number generator.</p>
 	</doc>
 **/
 
@@ -117,7 +117,7 @@ static double rnd_float( rnd *r ) {
 
 /**
 	random_new : void -> 'random
-	<doc>Create a new random with random seed</doc>
+	<doc>Create a new random number generator with a random seed.</doc>
 **/
 static value random_new() {
 	return alloc_abstract( k_random, rnd_init(alloc_private(rnd_size())) );
@@ -125,7 +125,7 @@ static value random_new() {
 
 /**
 	random_set_seed : 'random -> int -> void
-	<doc>Set the generator seed</doc>
+	<doc>Set the generator seed.</doc>
 **/
 static value random_set_seed( value o, value v ) {
 	val_check_kind(o,k_random);
@@ -136,7 +136,7 @@ static value random_set_seed( value o, value v ) {
 
 /**
 	random_int : 'random -> max:int -> int
-	<doc>Return a random integer modulo [max]</doc>
+	<doc>Return a random integer modulo [max].</doc>
 **/
 static value random_int( value o, value max ) {
 	val_check_kind(o,k_random);
@@ -148,7 +148,7 @@ static value random_int( value o, value max ) {
 
 /**
 	random_float : 'random -> float
-	<doc>Return a random float</doc>
+	<doc>Return a random float.</doc>
 **/
 static value random_float( value o ) {
 	val_check_kind(o,k_random);

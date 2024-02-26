@@ -27,10 +27,10 @@
 	<doc>
 	<h1>UTF8</h1>
 	<p>
-	Operations on UTF8 strings.
+	Operations on UTF-8 strings.
 	Most of the operations are optimized for speed so they might still
-	succeed on some malformed UTF8 string. The only function that completely
-	check the UTF8 format is [utf8_validate]. Other functions might raise
+	succeed on some malformed UTF-8 string. The only function that completely
+	checks the UTF-8 format is [utf8_validate]. Other functions might raise
 	some exception or not depending on the malformed data.
 	</p>
 	</doc>
@@ -47,7 +47,7 @@ DEFINE_KIND(k_ubuf);
 
 /**
 	utf8_buf_alloc : size:int -> 'ubuf
-	<doc>Create a new buffer with an initial size in bytes</doc>
+	<doc>Create a new buffer with an initial size in bytes.</doc>
 **/
 static value utf8_buf_alloc( value size ) {
 	ubuf *b;
@@ -77,7 +77,7 @@ static void utf8_buf_resize( ubuf *b ) {
 
 /**
 	utf8_buf_add : 'buf -> int -> void
-	<doc>Add a valid UTF8 char (0 - 0x10FFFF) to the buffer</doc>
+	<doc>Add a valid UTF-8 character (0 - 0x10FFFF) to the buffer.</doc>
 **/
 static value utf8_buf_add( value buf, value uchar ) {
 	ubuf *b;
@@ -121,7 +121,7 @@ static value utf8_buf_add( value buf, value uchar ) {
 	<doc>
 	Return the current content of the buffer.
 	This is not a copy of the buffer but the shared content.
-	Retreiving content and then continuing to add chars is
+	Retrieving content and then continuing to add characters is
 	possible but not very efficient.
 	</doc>
 **/
@@ -136,7 +136,7 @@ static value utf8_buf_content( value buf ) {
 
 /**
 	utf8_buf_length : 'buf -> int
-	<doc>Return the number of UTF8 chars stored in the buffer</doc>
+	<doc>Return the number of UTF-8 characters stored in the buffer.</doc>
 **/
 static value utf8_buf_length( value buf ) {
 	ubuf *b;
@@ -147,7 +147,7 @@ static value utf8_buf_length( value buf ) {
 
 /**
 	utf8_buf_size : 'buf -> int
-	<doc>Return the current size in bytes of the buffer</doc>
+	<doc>Return the current size in bytes of the buffer.</doc>
 **/
 static value utf8_buf_size( value buf ) {
 	ubuf *b;
@@ -158,7 +158,7 @@ static value utf8_buf_size( value buf ) {
 
 /**
 	utf8_validate : string -> bool
-	<doc>Validate if a string is encoded using the UTF8 format</doc>
+	<doc>Validate if a string is encoded using the UTF-8 format.</doc>
 **/
 static value utf8_validate( value str ) {
 	int l;
@@ -197,7 +197,7 @@ static value utf8_validate( value str ) {
 
 /**
 	utf8_length : string -> int
-	<doc>Returns the number of UTF8 chars in the string.</doc>
+	<doc>Returns the number of UTF-8 characters in the string.</doc>
 **/
 static value utf8_length( value str ) {
 	int l;
@@ -232,7 +232,7 @@ static value utf8_length( value str ) {
 
 /**
 	utf8_sub : string -> pos:int -> len:int -> string
-	<doc>Returns a part of an UTF8 string.</doc>
+	<doc>Returns a part of a UTF-8 string.</doc>
 **/
 static value utf8_sub( value str, value pos, value len ) {
 	int l;
@@ -298,8 +298,8 @@ static value utf8_sub( value str, value pos, value len ) {
 
 /**
 	utf8_get : string -> n:int -> int
-	<doc>Returns the [n]th char in an UTF8 string.
-	This might be inefficient if [n] is big.</doc>
+	<doc>Returns the [n]th character in a UTF-8 string.
+	This might be inefficient if [n] is large.</doc>
 **/
 static value utf8_get( value str, value pos ) {
 	int l;
@@ -348,7 +348,7 @@ static value utf8_get( value str, value pos ) {
 
 /**
 	utf8_iter : string -> f:(int -> void) -> void
-	<doc>Call [f] with each of UTF8 char of the string.</doc>
+	<doc>Call function [f] with each UTF-8 character of the string.</doc>
 **/
 static value utf8_iter( value str, value f ) {
 	int l;
@@ -388,7 +388,7 @@ static value utf8_iter( value str, value f ) {
 
 /**
 	utf8_compare : s1:string -> s2:string -> int
-	<doc>Compare two UTF8 strings according to UTF8 char codes.</doc>
+	<doc>Compare two UTF-8 strings according to UTF-8 character codes.</doc>
 **/
 static value utf8_compare( value str1, value str2 ) {
 	int l1, l2, l;

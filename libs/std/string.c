@@ -34,7 +34,7 @@
 
 /**
 	string_split : s:string -> sep:string -> string list
-	<doc>split the string [s] using separator [sep]</doc>
+	<doc>Split the string [s] using separator [sep].</doc>
 **/
 static value string_split( value o, value s ) {
 	value l, first;
@@ -82,15 +82,17 @@ static value string_split( value o, value s ) {
 /**
 	sprintf : fmt:string -> params:(any | array) -> string
 	<doc>
-	Format a string. If only one parameter is needed then it can be
-	directly passed, either the parameters need to be stored in an array.
-	The following formats are accepted (with corresponding types) :
+	Return a string formatted using the pattern in [fmt].
+	If only one parameter is needed, then it can be passed directly;
+	otherwise, the parameters need to be stored in an array.
+	The following format specifiers are accepted (with corresponding types) :
 	<ul>
-		<li>[%s] : string</li>
-		<li>[%d] [%x] [%X] : int</li>
-		<li>[%c] : int in the 0..255 range</li>
-		<li>[%b] : bool</li>
-		<li>[%f] : float</li>
+		<li>[%s] : [string] : the contents of the string</li>
+		<li>[%d] : [int] : the integer value</li>
+		<li>[%x] [%X] : [int] : the integer value in hexadecimal notation</li>
+		<li>[%c] : [int] in the 0..255 range : the ASCII character represented by that byte</li>
+		<li>[%b] : [bool] : [true] or [false]</li>
+		<li>[%f] : [float] : the floating-point value</li>
 	</ul>
 	</doc>
 **/
@@ -239,7 +241,7 @@ static value neko_sprintf( value fmt, value params ) {
 
 /**
 	url_decode : string -> string
-	<doc>Decode an url using escaped format</doc>
+	<doc>Decode a URL that is in the percent-escaped format.</doc>
 **/
 static value url_decode( value v ) {
 	val_check(v,string);
@@ -289,7 +291,7 @@ static value url_decode( value v ) {
 
 /**
 	url_encode : string -> string
-	<doc>Encode an url using escaped format</doc>
+	<doc>Encode a URL into the percent-escaped format.</doc>
 **/
 static value url_encode( value v ) {
 	val_check(v,string);
@@ -364,7 +366,7 @@ static value base_encode( value s, value base ) {
 /**
 	base_decode : s:string -> base:string -> string
 	<doc>
-	Decode a string encode in the specified base.
+	Decode a string encoded in the specified base.
 	The base length must be a power of two.
 	</doc>
 **/

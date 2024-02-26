@@ -31,7 +31,7 @@
 	<doc>
 	<h1>Module</h1>
 	<p>
-	An API for reflexion of Neko bytecode modules.
+	An API for reflection of Neko bytecode modules.
 	</p>
 	</doc>
 **/
@@ -79,7 +79,7 @@ static value module_read( value fread, value loader ) {
 /**
 	module_read_string : string -> loader:object -> 'module
 	<doc>
-	Read a module using the specified string datas.
+	Read a module using the specified string data.
 	</doc>
 **/
 static value module_read_string( value str, value loader ) {
@@ -134,7 +134,7 @@ static value module_read_path( value path, value name, value loader ) {
 
 /**
 	module_exec : 'module -> any
-	<doc>Execute the module, return the calculated value</doc>
+	<doc>Execute the module, returning the calculated value.</doc>
 **/
 static value module_exec( value mv ) {
 	neko_module *m;
@@ -145,7 +145,7 @@ static value module_exec( value mv ) {
 
 /**
 	module_name : 'module -> string
-	<doc>Return the module name</doc>
+	<doc>Return the module name.</doc>
 **/
 static value module_name( value mv ) {
 	neko_module *m;
@@ -156,7 +156,7 @@ static value module_name( value mv ) {
 
 /**
 	module_set_name : 'module -> string -> void
-	<doc>Set the module name</doc>
+	<doc>Set the module name.</doc>
 **/
 static value module_set_name( value mv, value str ) {
 	neko_module *m;
@@ -169,7 +169,7 @@ static value module_set_name( value mv, value str ) {
 
 /**
 	module_exports : 'module -> object
-	<doc>Return the module export table</doc>
+	<doc>Return the module export table.</doc>
 **/
 static value module_exports( value mv ) {
 	neko_module *m;
@@ -180,7 +180,7 @@ static value module_exports( value mv ) {
 
 /**
 	module_loader : 'module -> object
-	<doc>Return the module loader</doc>
+	<doc>Return the module loader.</doc>
 **/
 static value module_loader( value mv ) {
 	neko_module *m;
@@ -191,7 +191,7 @@ static value module_loader( value mv ) {
 
 /**
 	module_nglobals : 'module -> int
-	<doc>Return the number of globals for this module</doc>
+	<doc>Return the number of globals for this module.</doc>
 **/
 static value module_nglobals( value mv ) {
 	neko_module *m;
@@ -202,7 +202,7 @@ static value module_nglobals( value mv ) {
 
 /**
 	module_global_get : 'module -> n:int -> any
-	<doc>Get the [n]th global</doc>
+	<doc>Get the [n]th global for this module.</doc>
 **/
 static value module_global_get( value mv, value p ) {
 	neko_module *m;
@@ -218,7 +218,7 @@ static value module_global_get( value mv, value p ) {
 
 /**
 	module_global_set : 'module -> n:int -> any -> void
-	<doc>Set the [n]th global</doc>
+	<doc>Set the [n]th global for this module.</doc>
 **/
 static value module_global_set( value mv, value p, value v ) {
 	neko_module *m;
@@ -235,7 +235,7 @@ static value module_global_set( value mv, value p, value v ) {
 
 /**
 	module_code_size : 'module -> int
-	<doc>return the codesize of the module</doc>
+	<doc>Return the code size of the module.</doc>
 **/
 static value module_code_size( value mv ) {
 	val_check_kind(mv,neko_kind_module);

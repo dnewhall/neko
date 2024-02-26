@@ -250,7 +250,7 @@ static void thread_loop( void *_p ) {
 
 /**
 	thread_create : f:function:1 -> p:any -> 'thread
-	<doc>Creates a thread that will be running the function [f(p)]</doc>
+	<doc>Creates a thread that will be running the function [f(p)].</doc>
 **/
 static value thread_create( value f, value param ) {
 	tparams *p;
@@ -266,7 +266,7 @@ static value thread_create( value f, value param ) {
 
 /**
 	thread_current : void -> 'thread
-	<doc>Returns the current thread</doc>
+	<doc>Returns the current thread.</doc>
 **/
 static value thread_current() {
 	vthread *t = neko_thread_current();
@@ -281,7 +281,7 @@ static value thread_current() {
 
 /**
 	thread_send : 'thread -> msg:any -> void
-	<doc>Send a message into the target thread message queue</doc>
+	<doc>Send a message into the target thread message queue.</doc>
 **/
 static value thread_send( value vt, value msg ) {
 	vthread *t;
@@ -297,7 +297,7 @@ static value thread_send( value vt, value msg ) {
 	Reads a message from the message queue. If [block] is true, the
 	function only returns when a message is available. If [block] is
 	false and no message is available in the queue, the function will
-	return immediatly [null].
+	return [null] immediately.
 	</doc>
 **/
 static value thread_read_message( value block ) {
@@ -313,7 +313,7 @@ static value thread_read_message( value block ) {
 /**
 	thread_stack : 'thread -> array
 	<doc>
-	Get the thread current call stack. Might crash if the thread currently manipulate the stack, so mostly used to debug infinite loops.
+	Get the thread current call stack. Might crash if the thread is currently manipulating the stack, so mostly is used to debug infinite loops.
 	</doc>
 **/
 static value thread_stack( value vt ) {
@@ -335,7 +335,7 @@ static void free_lock( value l ) {
 
 /**
 	lock_create : void -> 'lock
-	<doc>Creates a lock which is initially locked</doc>
+	<doc>Creates a lock which is initially locked.</doc>
 **/
 static value lock_create() {
 	value vl;
@@ -360,7 +360,7 @@ static value lock_create() {
 	<doc>
 	Release a lock. The thread does not need to own the lock to be
 	able to release it. If a lock is released several times, it can be
-	acquired as many times
+	acquired as many times.
 	</doc>
 **/
 static value lock_release( value lock ) {
@@ -384,7 +384,7 @@ static value lock_release( value lock ) {
 	<doc>
 	Waits for a lock to be released and acquire it.
 	If [timeout] (in seconds) is not null and expires then
-	the returned value is false
+	the returned value is false.
 	</doc>
 **/
 static value lock_wait( value lock, value timeout ) {
@@ -588,7 +588,7 @@ static void free_deque( value v ) {
 
 /**
 	deque_create : void -> 'deque
-	<doc>create a message queue for multithread access</doc>
+	<doc>Create a message queue for multithread access.</doc>
 **/
 static value deque_create() {
 	vdeque *q = (vdeque*)alloc(sizeof(vdeque));
@@ -600,7 +600,7 @@ static value deque_create() {
 
 /**
 	deque_add : 'deque -> any -> void
-	<doc>add a message at the end of the queue</doc>
+	<doc>Add a message at the end of the queue. Returns null.</doc>
 **/
 static value deque_add( value v, value i ) {
 	val_check_kind(v,k_deque);
@@ -610,7 +610,7 @@ static value deque_add( value v, value i ) {
 
 /**
 	deque_push : 'deque -> any -> void
-	<doc>add a message at the head of the queue</doc>
+	<doc>Add a message at the head of the queue. Returns null.</doc>
 **/
 static value deque_push( value v, value i ) {
 	val_check_kind(v,k_deque);
@@ -620,7 +620,7 @@ static value deque_push( value v, value i ) {
 
 /**
 	deque_pop : 'deque -> bool -> any?
-	<doc>pop a message from the queue head. Either block until a message is available or return immedialtly with null.</doc>
+	<doc>Pop a message from the queue head. Either block until a message is available or return immedialtely with null.</doc>
 **/
 static value deque_pop( value v, value block ) {
 	val_check_kind(v,k_deque);

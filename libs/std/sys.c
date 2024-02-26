@@ -69,7 +69,8 @@
 
 /**
 	get_env : string -> string?
-	<doc>Get some environment variable if exists</doc>
+	<doc>Get the value of an environment variable.
+	Returns null if the environment variable doesn't exist.</doc>
 **/
 static value get_env( value v ) {
 	char *s;
@@ -82,7 +83,7 @@ static value get_env( value v ) {
 
 /**
 	put_env : var:string -> val:string -> void
-	<doc>Set some environment variable value</doc>
+	<doc>Set the value of an environment variable.</doc>
 **/
 static value put_env( value e, value v ) {
 	val_check(e,string);
@@ -114,7 +115,7 @@ static value put_env( value e, value v ) {
 
 /**
 	sys_sleep : number -> void
-	<doc>Sleep a given number of seconds</doc>
+	<doc>Sleep for a given number of seconds.</doc>
 **/
 static value sys_sleep( value f ) {
 	val_check(f,number);
@@ -138,7 +139,7 @@ static value sys_sleep( value f ) {
 
 /**
 	set_time_locale : string -> bool
-	<doc>Set the locale for LC_TIME, returns true on success</doc>
+	<doc>Set the locale for LC_TIME, returns true on success.</doc>
 **/
 static value set_time_locale( value l ) {
 #ifdef NEKO_POSIX
@@ -162,7 +163,7 @@ static value set_time_locale( value l ) {
 
 /**
 	get_cwd : void -> string
-	<doc>Return current working directory</doc>
+	<doc>Return the current working directory.</doc>
 **/
 static value get_cwd() {
 	char buf[256];
@@ -179,7 +180,7 @@ static value get_cwd() {
 
 /**
 	set_cwd : string -> void
-	<doc>Set current working directory</doc>
+	<doc>Set the current working directory.</doc>
 **/
 static value set_cwd( value d ) {
 	val_check(d,string);
@@ -192,7 +193,7 @@ static value set_cwd( value d ) {
 /**
 	sys_string : void -> string
 	<doc>
-	Return the local system string. The current value are possible :
+	Return the operating system identifier. The current possible values :
 	<ul>
 	<li>[Windows]</li>
 	<li>[Linux]</li>
@@ -215,14 +216,14 @@ static value sys_string() {
 #elif defined(NEKO_MAC)
 	return alloc_string("Mac");
 #else
-#error Unknow system string
+#error Unknown system string
 #endif
 }
 
 /**
 	sys_is64 : void -> bool
 	<doc>
-	Returns true if we are on a 64-bit system
+	Returns true if we are on a 64-bit system.
 	</doc>
 **/
 static value sys_is64() {
@@ -236,7 +237,7 @@ static value sys_is64() {
 /**
 	sys_cpu_arch : void -> string
 	<doc>
-	Returns the cpu architecture. Current possible values:
+	Returns the CPU architecture. The current possible values :
 	<ul>
 	<li>[x86_64]</li>
 	<li>[x86]</li>
@@ -261,7 +262,7 @@ static value sys_cpu_arch() {
 
 /**
 	sys_command : string -> int
-	<doc>Run the shell command and return exit code</doc>
+	<doc>Run the shell command and return its exit code.</doc>
 **/
 static value sys_command( value cmd ) {
 	val_check(cmd,string);
@@ -277,7 +278,7 @@ static value sys_command( value cmd ) {
 
 /**
 	sys_exit : int -> void
-	<doc>Exit with the given errorcode. Never returns.</doc>
+	<doc>Exit with the given exit code. Never returns.</doc>
 **/
 static value sys_exit( value ecode ) {
 	val_check(ecode,int);
@@ -305,7 +306,7 @@ static value file_exists( value path ) {
 
 /**
 	file_delete : string -> void
-	<doc>Delete the file. Exception on error.</doc>
+	<doc>Delete the file. Throws an exception on error.</doc>
 **/
 static value file_delete( value path ) {
 	val_check(path,string);
@@ -316,7 +317,7 @@ static value file_delete( value path ) {
 
 /**
 	sys_rename : from:string -> to:string -> void
-	<doc>Rename the file or directory. Exception on error.</doc>
+	<doc>Rename the file or directory. Throws an exception on error.</doc>
 **/
 static value sys_rename( value path, value newname ) {
 	val_check(path,string);
@@ -343,7 +344,7 @@ static value sys_rename( value path, value newname ) {
 		mode => int,
 		size => int
 	}
-	<doc>Run the [stat] command on the given file or directory.</doc>
+	<doc>Run the [stat] C function on the given file or directory.</doc>
 **/
 static value sys_stat( value path ) {
 	struct stat s;
@@ -370,7 +371,7 @@ static value sys_stat( value path ) {
 /**
 	sys_file_type : string -> string
 	<doc>
-	Return the type of the file. The current values are possible :
+	Return the type of the file. The current possible values :
 	<ul>
 	<li>[file]</li>
 	<li>[dir]</li>
@@ -408,7 +409,7 @@ static value sys_file_type( value path ) {
 
 /**
 	sys_create_dir : string -> mode:int -> void
-	<doc>Create a directory with the specified rights</doc>
+	<doc>Create a directory with the specified permissions.</doc>
 **/
 static value sys_create_dir( value path, value mode ) {
 	val_check(path,string);
@@ -424,7 +425,7 @@ static value sys_create_dir( value path, value mode ) {
 
 /**
 	sys_remove_dir : string -> void
-	<doc>Remove a directory. Exception on error</doc>
+	<doc>Remove a directory. Throws an exception on error.</doc>
 **/
 static value sys_remove_dir( value path ) {
 	val_check(path,string);
@@ -435,7 +436,7 @@ static value sys_remove_dir( value path ) {
 
 /**
 	sys_time : void -> float
-	<doc>Return an accurate local time stamp in seconds since Jan 1 1970</doc>
+	<doc>Return an accurate local time stamp in seconds since January 1st 1970.</doc>
 **/
 static value sys_time() {
 #ifdef NEKO_WINDOWS
@@ -459,7 +460,7 @@ static value sys_time() {
 
 /**
 	sys_cpu_time : void -> float
-	<doc>Return the most accurate CPU time spent since the process started (in seconds)</doc>
+	<doc>Return the most accurate CPU time spent since the process started (in seconds).</doc>
 **/
 static value sys_cpu_time() {
 #ifdef NEKO_WINDOWS
@@ -478,7 +479,7 @@ static value sys_cpu_time() {
 
 /**
 	sys_thread_cpu_time : void -> float
-	<doc>Return the most accurate CPU time spent in user mode in the current thread (in seconds)</doc>
+	<doc>Return the most accurate CPU time spent in user mode in the current thread (in seconds). Not available on MacOS.</doc>
 **/
 static value sys_thread_cpu_time() {
 #if defined(NEKO_WINDOWS)
@@ -488,7 +489,7 @@ static value sys_thread_cpu_time() {
 		neko_error();
 	return alloc_float( ((tfloat)utime.dwHighDateTime) * 65.536 * 6.5536 + (((tfloat)utime.dwLowDateTime) / 10000000) );
 #elif defined(NEKO_MAC)
-	val_throw(alloc_string("sys_thread_cpu_time not implmented on OSX"));
+	val_throw(alloc_string("sys_thread_cpu_time not implmented on MacOS"));
 	return val_null;
 #else
 	struct timespec t;
@@ -500,7 +501,7 @@ static value sys_thread_cpu_time() {
 
 /**
 	sys_read_dir : string -> string list
-	<doc>Return the content of a directory</doc>
+	<doc>Return the content of a directory. Does not return any file or directory that starts with a "."</doc>
 **/
 static value sys_read_dir( value path ) {
 	value h = val_null;
@@ -523,7 +524,7 @@ static value sys_read_dir( value path ) {
 	if( handle == INVALID_HANDLE_VALUE )
 		neko_error();
 	while( true ) {
-		// skip magic dirs
+		// Skip hidden directories and files
 		if( d.cFileName[0] != '.' || (d.cFileName[1] != 0 && (d.cFileName[1] != '.' || d.cFileName[2] != 0)) ) {
 			tmp = alloc_array(2);
 			val_array_ptr(tmp)[0] = alloc_string(d.cFileName);
@@ -549,7 +550,7 @@ static value sys_read_dir( value path ) {
 		e = readdir(d);
 		if( e == NULL )
 			break;
-		// skip magic dirs
+		// Skip hidden directories and files
 		if( e->d_name[0] == '.' && (e->d_name[1] == 0 || (e->d_name[1] == '.' && e->d_name[2] == 0)) )
 			continue;
 		tmp = alloc_array(2);
@@ -568,7 +569,7 @@ static value sys_read_dir( value path ) {
 
 /**
 	file_full_path : string -> string
-	<doc>Return an absolute path from a relative one. The file or directory must exists</doc>
+	<doc>Return an absolute path from a relative one. The file or directory must exist.</doc>
 **/
 static value file_full_path( value path ) {
 #ifdef NEKO_WINDOWS
@@ -596,7 +597,7 @@ static value file_full_path( value path ) {
 
 /**
 	sys_exe_path : void -> string
-	<doc>Return the path of the executable</doc>
+	<doc>Return the path of the executable.</doc>
 **/
 static value sys_exe_path() {
 #if defined(NEKO_WINDOWS)
@@ -641,7 +642,7 @@ extern char **environ;
 
 /**
 	sys_env : void -> #list
-	<doc>Return all the (key,value) pairs in the environment as a chained list</doc>
+	<doc>Return all the (key, value) pairs in the environment as a chained list.</doc>
 **/
 static value sys_env() {
 	value h = val_null;
@@ -671,7 +672,7 @@ static value sys_env() {
 
 /**
 	sys_getch : bool -> int
-	<doc>Read a character from stdin with or without echo</doc>
+	<doc>Read a character from stdin with or without echo.</doc>
 **/
 static value sys_getch( value b ) {
 #	ifdef NEKO_WINDOWS
@@ -697,7 +698,7 @@ static value sys_getch( value b ) {
 
 /**
 	sys_get_pid : void -> int
-	<doc>Returns the current process identifier</doc>
+	<doc>Returns the current process identifier.</doc>
 **/
 static value sys_get_pid() {
 #	ifdef NEKO_WINDOWS
@@ -709,7 +710,7 @@ static value sys_get_pid() {
 
 /**
 	win_env_changed : void -> void
-	<doc>Tell that the windows envionment variables were changed in the registry</doc>
+	<doc>Tell Windows that the environment variables were changed in the registry. Windows only</doc>
 **/
 static value win_env_changed() {
 #	ifdef NEKO_WINDOWS

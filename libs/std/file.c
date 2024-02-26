@@ -29,7 +29,7 @@
 	<doc>
 	<h1>File</h1>
 	<p>
-	The file api can be used for different kind of file I/O.
+	The file API can be used for different kind of file I/O.
 	</p>
 	</doc>
 **/
@@ -54,7 +54,18 @@ static void file_error( const char *msg, fio *f ) {
 	file_open : f:string -> r:string -> 'file
 	<doc>
 	Call the C function [fopen] with the file path and access rights.
-	Return the opened file or throw an exception if the file couldn't be open.
+	The exact access options supported depends on the operating system.
+	At least the following will always be supported:
+	<ul>
+		<li>["r"] : open existing file for reading</li>
+		<li>["w"] : truncate to zero length and open for writing</li>
+		<li>["a"] : open for append (writing at end-of-file)</li>
+		<li>["r+"] : open existing file for update (reading and writing)</li>
+		<li>["w+"] : truncate to zero length and open for update</li>
+		<li>["a+"] : open file for update (reading and writing)</li>
+		<li>Additionally, on Windows platforms, adding a ["t"] or a ["b"] turns newline conversion on (text mode) or off (binary mode)</li>
+	</ul>
+	Returns the opened file or throws an exception if the file couldn't be opened.
 	</doc>
 **/
 static value file_open( value name, value r ) {
@@ -71,7 +82,7 @@ static value file_open( value name, value r ) {
 
 /**
 	file_close : 'file -> void
-	<doc>Close an file. Any other operations on this file will fail</doc>
+	<doc>Close a file. Any other operations on this file will fail.</doc>
 **/
 static value file_close( value o ) {
 	fio *f;
@@ -84,7 +95,7 @@ static value file_close( value o ) {
 
 /**
 	file_name : 'file -> string
-	<doc>Return the name of the file which was opened</doc>
+	<doc>Return the name of the file which was opened.</doc>
 **/
 static value file_name( value o ) {
 	val_check_kind(o,k_file);
@@ -128,7 +139,7 @@ static value file_write( value o, value s, value pp, value n ) {
 	file_read : 'file -> s:string -> p:int -> l:int -> int
 	<doc>
 	Read up to [l] chars into the string [s] starting at position [p].
-	Returns the number of chars readed which is > 0 (or 0 if l == 0).
+	Returns the number of chars read which is > 0 (or 0 if l == 0).
 	</doc>
 **/
 static value file_read( value o, value s, value pp, value n ) {
@@ -184,7 +195,7 @@ static value file_write_char( value o, value c ) {
 
 /**
 	file_read_char : 'file -> int
-	<doc>Read a char from the file. Exception on error</doc>
+	<doc>Read a char from the file. Throws an exception on error.</doc>
 **/
 static value file_read_char( value o ) {
 	unsigned char cc;
@@ -201,7 +212,7 @@ static value file_read_char( value o ) {
 
 /**
 	file_seek : 'file -> pos:int -> mode:int -> void
-	<doc>Use [fseek] to move the file pointer.</doc>
+	<doc>Use the C function [fseek] to move the file pointer.</doc>
 **/
 static value file_seek( value o, value pos, value kind ) {
 	fio *f;
@@ -216,7 +227,7 @@ static value file_seek( value o, value pos, value kind ) {
 
 /**
 	file_tell : 'file -> int
-	<doc>Return the current position in the file</doc>
+	<doc>Return the current position in the file.</doc>
 **/
 static value file_tell( value o ) {
 	int p;
@@ -231,7 +242,7 @@ static value file_tell( value o ) {
 
 /**
 	file_eof : 'file -> bool
-	<doc>Tell if we have reached the end of the file</doc>
+	<doc>Tell if we have reached the end of the file.</doc>
 **/
 static value file_eof( value o ) {
 	val_check_kind(o,k_file);
@@ -240,7 +251,7 @@ static value file_eof( value o ) {
 
 /**
 	file_flush : 'file -> void
-	<doc>Flush the file buffer</doc>
+	<doc>Flush any unwritten data to the file.</doc>
 **/
 static value file_flush( value o ) {
 	fio *f;

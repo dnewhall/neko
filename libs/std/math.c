@@ -41,7 +41,7 @@
 
 /**
 	math_atan2 : number -> number -> float
-	<doc>Return atan2 calculus</doc>
+	<doc>Return the two-argument arctangent.</doc>
 **/
 static value math_atan2( value a, value b ) {
 	val_check(a,number);
@@ -50,8 +50,8 @@ static value math_atan2( value a, value b ) {
 }
 
 /**
-	math_pow : number -> number -> float
-	<doc>Return power calculus</doc>
+	math_pow : a:number -> b:number -> float
+	<doc>Return [a] raised to the power of [b].</doc>
 **/
 static value math_pow( value a, value b ) {
 	tfloat r;
@@ -65,7 +65,7 @@ static value math_pow( value a, value b ) {
 
 /**
 	math_abs : number -> number
-	<doc>Return absolute value of a number</doc>
+	<doc>Return the absolute value of a number</doc>
 **/
 static value math_abs( value n ) {
 	switch( val_type(n) ) {
@@ -82,7 +82,7 @@ static value math_abs( value n ) {
 
 /**
 	math_ceil : number -> int
-	<doc>Return rounded-up integer</doc>
+	<doc>Return rounded-up integer.</doc>
 **/
 static value math_ceil( value n ) {
 	switch( val_type(n) ) {
@@ -98,7 +98,7 @@ static value math_ceil( value n ) {
 
 /**
 	math_floor : number -> int
-	<doc>Return rounded-down integer</doc>
+	<doc>Return rounded-down integer.</doc>
 **/
 static value math_floor( value n ) {
 	switch( val_type(n) ) {
@@ -114,7 +114,7 @@ static value math_floor( value n ) {
 
 /**
 	math_round : number -> int
-	<doc>Return nearest integer</doc>
+	<doc>Return nearest integer.</doc>
 **/
 static value math_round( value n ) {
 	switch( val_type(n) ) {
@@ -130,7 +130,7 @@ static value math_round( value n ) {
 
 /**
 	math_fceil : number -> number
-	<doc>Return rounded-up float without integer overflow</doc>
+	<doc>Return rounded-up float without integer overflow.</doc>
 **/
 static value math_fceil( value n ) {
 	switch( val_type(n) ) {
@@ -146,7 +146,7 @@ static value math_fceil( value n ) {
 
 /**
 	math_ffloor : number -> number
-	<doc>Return rounded-down float without integer overflow</doc>
+	<doc>Return rounded-down float without integer overflow.</doc>
 **/
 static value math_ffloor( value n ) {
 	switch( val_type(n) ) {
@@ -162,7 +162,7 @@ static value math_ffloor( value n ) {
 
 /**
 	math_fround : number -> number
-	<doc>Return rounded float without integer overflow</doc>
+	<doc>Return rounded float without integer overflow.</doc>
 **/
 static value math_fround( value n ) {
 	switch( val_type(n) ) {
@@ -178,7 +178,7 @@ static value math_fround( value n ) {
 
 /**
 	math_int : number -> int
-	<doc>Return integer rounded down towards 0</doc>
+	<doc>Return integer rounded down towards 0.</doc>
 **/
 static value math_int( value n ) {
 	switch( val_type(n) ) {
@@ -199,7 +199,7 @@ static value math_int( value n ) {
 
 /**
 	math_pi : void -> float
-	<doc>Return the value of PI</doc>
+	<doc>Return the value of PI.</doc>
 **/
 static value math_pi() {
 	return alloc_float(PI);
@@ -207,47 +207,47 @@ static value math_pi() {
 
 /**
 	math_sqrt : number -> float
-	<doc>Return the square-root</doc>
+	<doc>Return the square root.</doc>
 **/
 MATH_PRIM(sqrt);
 /**
 	math_atan : number -> float
-	<doc>Return the arc-tangent</doc>
+	<doc>Return the arctangent.</doc>
 **/
 MATH_PRIM(atan);
 /**
 	math_cos : number -> float
-	<doc>Return the cosinus</doc>
+	<doc>Return the cosine.</doc>
 **/
 MATH_PRIM(cos);
 /**
 	math_sin : number -> float
-	<doc>Return the sinus</doc>
+	<doc>Return the sine.</doc>
 **/
 MATH_PRIM(sin);
 /**
 	math_tan : number -> float
-	<doc>Return the tangent</doc>
+	<doc>Return the tangent.</doc>
 **/
 MATH_PRIM(tan);
 /**
 	math_log : number -> float
-	<doc>Return the logarithm</doc>
+	<doc>Return the natural logarithm.</doc>
 **/
 MATH_PRIM(log);
 /**
 	math_exp : number -> float
-	<doc>Return the exponant</doc>
+	<doc>Return the natural exponent.</doc>
 **/
 MATH_PRIM(exp);
 /**
 	math_acos : number -> float
-	<doc>Return the arc-cosinus</doc>
+	<doc>Return the arccosine.</doc>
 **/
 MATH_PRIM(acos);
 /**
 	math_asin : number -> float
-	<doc>Return the arc-sinus</doc>
+	<doc>Return the arcsine.</doc>
 **/
 MATH_PRIM(asin);
 

@@ -36,7 +36,7 @@ DEFINE_KIND(k_buffer);
 
 /**
 	buffer_new : void -> 'buffer
-	<doc>Allocate a new empty buffer</doc>
+	<doc>Allocate a new empty buffer.</doc>
 **/
 static value buffer_new() {
 	buffer b = alloc_buffer(NULL);
@@ -45,7 +45,7 @@ static value buffer_new() {
 
 /**
 	buffer_add : 'buffer -> any -> void
-	<doc>Add a value to a buffer</doc>
+	<doc>Add a value to a buffer.</doc>
 **/
 static value buffer_add( value b, value v ) {
 	val_check_kind(b,k_buffer);
@@ -55,7 +55,7 @@ static value buffer_add( value b, value v ) {
 
 /**
 	buffer_add_char : 'buffer -> c:int -> void
-	<doc>Add a single char to a buffer. Error if [c] is not in the 0..255 range</doc>
+	<doc>Add a single char to a buffer. Error if [c] is not in the 0..255 range.</doc>
 **/
 static value buffer_add_char( value b, value c ) {
 	val_check_kind(b,k_buffer);
@@ -85,7 +85,7 @@ static value buffer_add_sub( value b, value v, value p, value l ) {
 
 /**
 	buffer_string : 'buffer -> string
-	<doc>Build and return the string built with the buffer</doc>
+	<doc>Build and return the string built with the buffer.</doc>
 **/
 static value buffer_string( value b ) {
 	val_check_kind(b,k_buffer);
@@ -94,7 +94,7 @@ static value buffer_string( value b ) {
 
 /**
 	buffer_reset : 'buffer -> void
-	<doc>Make the buffer empty</doc>
+	<doc>Make the buffer empty.</doc>
 **/
 static value buffer_reset( value b ) {
 	val_check_kind(b,k_buffer);

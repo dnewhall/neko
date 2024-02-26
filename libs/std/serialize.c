@@ -307,18 +307,18 @@ static void serialize_fields_rec( value data, field id, void *b ) {
 	exception when deserializing if the function offset in the bytecode has changed.
 	</p>
 	<p>
-	You can define the __serialize method of an object. When this method is found when
+	You can define the [__serialize] method of an object. When this method is found when
 	serializing the object, it is called with no arguments and its return value will be
 	serialized. The name of the module the method is declared in will also be serialized.
-	When unserializing, the module is loaded and its __unserialize exported function is
-	called with the value that was returned by __serialize.
+	When unserializing, the module is loaded and its [__unserialize] exported function is
+	called with the value that was returned by [__serialize].
 	</p>
 	</doc>
 **/
 
 /**
 	serialize : any -> string
-	<doc>Serialize any value recursively</doc>
+	<doc>Serialize any value recursively.</doc>
 **/
 static value serialize( value o ) {
 	sbuffer b;

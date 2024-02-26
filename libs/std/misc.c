@@ -25,14 +25,14 @@
 	<doc>
 	<h1>Misc</h1>
 	<p>
-	Misc. functions for different usages.
+	Miscellaneous functions for different usages.
 	</p>
 	</doc>
 **/
 
 /**
 	float_bytes : number -> bigendian:bool -> string
-	<doc>Returns the 4 bytes representation of the number as an IEEE 32-bit float</doc>
+	<doc>Returns the 4 byte representation of the number as an IEEE 32-bit float.</doc>
 **/
 static value float_bytes( value n, value be ) {
 	float f;
@@ -50,7 +50,7 @@ static value float_bytes( value n, value be ) {
 
 /**
 	double_bytes : number -> bigendian:bool -> string
-	<doc>Returns the 8 bytes representation of the number as an IEEE 64-bit float</doc>
+	<doc>Returns the 8 byte representation of the number as an IEEE 64-bit float.</doc>
 **/
 static value double_bytes( value n, value be ) {
 	double f;
@@ -70,7 +70,10 @@ static value double_bytes( value n, value be ) {
 
 /**
 	float_of_bytes : string -> bigendian:bool -> float
-	<doc>Returns a float from a 4 bytes IEEE 32-bit representation</doc>
+	<doc>
+	Returns a float from a 4 byte representation of a IEEE 32-bit float.
+	The representation is considered little-endian unless [bigendian] is set to true.
+	</doc>
 **/
 static value float_of_bytes( value s, value be ) {
 	float f;
@@ -90,7 +93,10 @@ static value float_of_bytes( value s, value be ) {
 
 /**
 	double_of_bytes : string -> bigendian:bool -> float
-	<doc>Returns a float from a 8 bytes IEEE 64-bit representation</doc>
+	<doc>
+	Returns a float from a 8 byte representation of a IEEE 64-bit float.
+	The representation is considered little-endian unless [bigendian] is set to true.
+	</doc>
 **/
 static value double_of_bytes( value s, value be ) {
 	double f;
@@ -112,7 +118,7 @@ static value double_of_bytes( value s, value be ) {
 
 /**
 	run_gc : major:bool -> void
-	<doc>Run the Neko garbage collector</doc>
+	<doc>Run the Neko garbage collector.</doc>
 **/
 static value run_gc( value b ) {
 	val_check(b,bool);
@@ -125,7 +131,7 @@ static value run_gc( value b ) {
 
 /**
 	gc_stats : void -> { heap => int, free => int }
-	<doc>Return the size of the GC heap and the among of free space, in bytes</doc>
+	<doc>Return the size of the GC heap and the amount of free space, in bytes.</doc>
 **/
 static value gc_stats() {
 	int heap, free;
@@ -151,7 +157,7 @@ static value enable_jit( value b ) {
 
 /**
 	test : void -> void
-	<doc>The test function, to check that library is reachable and correctly linked</doc>
+	<doc>The test function, to check that the standard library is reachable and correctly linked.</doc>
 **/
 static value test() {
 	val_print(alloc_string("Calling a function inside std library...\n"));
@@ -197,7 +203,7 @@ static value set_trusted( value b ) {
 /**
 	same_closure : any -> any -> bool
 	<doc>
-	Compare two functions by checking that they refer to the same implementation and that their environments contains physically equal values.
+	Compare two functions by checking that they refer to the same implementation and that their environments contain physically equal values.
 	</doc>
 **/
 static value same_closure( value _f1, value _f2 ) {

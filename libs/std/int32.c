@@ -32,7 +32,7 @@
 
 /**
 	int32_new : (#int32 | float) -> 'int32
-	<doc>Allocate an int32 from any number</doc>
+	<doc>Allocate an int32 from any number.</doc>
 **/
 static value int32_new( value v ) {
 	val_check(v,number);
@@ -41,7 +41,7 @@ static value int32_new( value v ) {
 
 /**
 	int32_to_int : #int32 -> int
-	<doc>Return the int value if it can be represented using 31 bits. Error either</doc>
+	<doc>Return the int value if it can be represented using 31 bits. Error otherwise.</doc>
 **/
 static value int32_to_int( value v ) {
 	int i;
@@ -63,7 +63,7 @@ static value int32_to_float( value v ) {
 
 /**
 	int32_compare : #int32 -> #int32 -> int
-	<doc>Compare two integers</doc>
+	<doc>Compare two integers. Return -1 if less than, 0 if equal, or 1 if greater than.</doc>
 **/
 static value int32_compare( value v1, value v2 ) {
 	int i1, i2;
@@ -114,7 +114,7 @@ static value int32_compare( value v1, value v2 ) {
 
 /**
 	int32_ushr : #int32 -> #int32 -> #int32
-	<doc>Perform unsigned right bits-shifting</doc>
+	<doc>Perform an unsigned right bit shift.</doc>
 **/
 static value int32_ushr( value v1, value v2 ) {
 	int r;
@@ -126,62 +126,62 @@ static value int32_ushr( value v1, value v2 ) {
 
 /**
 	int32_add : #int32 -> #int32 -> #int32
-	<doc>Add two integers</doc>
+	<doc>Add two integers.</doc>
 **/
 INT32_OP(add,+);
 /**
 	int32_sub : #int32 -> #int32 -> #int32
-	<doc>Subtract two integers</doc>
+	<doc>Subtract two integers.</doc>
 **/
 INT32_OP(sub,-);
 /**
 	int32_mul : #int32 -> #int32 -> #int32
-	<doc>Multiply two integers</doc>
+	<doc>Multiply two integers.</doc>
 **/
 INT32_OP(mul,*);
 /**
 	int32_div : #int32 -> #int32 -> #int32
-	<doc>Divide two integers. Error on division by 0</doc>
+	<doc>Divide two integers. Error on division by 0.</doc>
 **/
 INT32_OP_ZERO(div,/);
 /**
 	int32_shl : #int32 -> #int32 -> #int32
-	<doc>Perform left bit-shifting</doc>
+	<doc>Perform a left bit shift.</doc>
 **/
 INT32_OP(shl,<<);
 /**
 	int32_shr : #int32 -> #int32 -> #int32
-	<doc>Perform right bit-shifting</doc>
+	<doc>Perform a right bit shift.</doc>
 **/
 INT32_OP(shr,>>);
 /**
 	int32_mod : #int32 -> #int32 -> #int32
-	<doc>Return the modulo of one integer by the other. Error on modulo by 0</doc>
+	<doc>Return the modulo of one integer by the other. Error on modulo by 0.</doc>
 **/
 INT32_OP_ZERO(mod,%);
 /**
 	int32_neg : #int32 -> #int32
-	<doc>Return the negative value of an integer</doc>
+	<doc>Return the negative value of an integer.</doc>
 **/
 INT32_UNOP(neg,-);
 /**
 	int32_complement : #int32 -> #int32
-	<doc>Return the one-complement bitwised integer</doc>
+	<doc>Return the ones' complement of an integer.</doc>
 **/
 INT32_UNOP(complement,~);
 /**
 	int32_or : #int32 -> #int32 -> #int32
-	<doc>Return the bitwise or of two integers</doc>
+	<doc>Return the bitwise or of two integers.</doc>
 **/
 INT32_OP(or,|);
 /**
 	int32_and : #int32 -> #int32 -> #int32
-	<doc>Return the bitwise and of two integers</doc>
+	<doc>Return the bitwise and of two integers.</doc>
 **/
 INT32_OP(and,&);
 /**
 	int32_xor : #int32 -> #int32 -> #int32
-	<doc>Return the bitwise xor of two integers</doc>
+	<doc>Return the bitwise xor of two integers.</doc>
 **/
 INT32_OP(xor,^);
 
