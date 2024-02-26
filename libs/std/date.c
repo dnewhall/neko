@@ -28,8 +28,8 @@
 	<doc>
 	<h1>Date</h1>
 	<p>
-	Date are using standard C functions in order to manipulate a 32 bit integer.
-	Dates are then represented as the number of seconds elapsed since 1st January
+	Date and time handling uses standard C functions to manipulate a 32-bit integer representing the date.
+	Dates are represented as the number of seconds elapsed since January 1st
 	1970.
 	</p>
 	</doc>
@@ -61,7 +61,7 @@ static struct tm *gmtime_r( time_t *t, struct tm *r ) {
 
 /**
 	date_now : void -> 'int32
-	<doc>Return current date and time</doc>
+	<doc>Return current date and time.</doc>
 **/
 static value date_now() {
 	int t = (int)time(NULL);
@@ -76,7 +76,7 @@ static value date_now() {
 		<li>[null] : return current date and time</li>
 		<li>[YYYY-MM-DD HH:MM:SS] : full date and time</li>
 		<li>[YYYY-MM-DD] : date only (time will be set to midnight)</li>
-		<li>[HH:MM:SS] : this represent an elapsed time. It will be corrected with timezone so you can subtract it from a date.</li>
+		<li>[HH:MM:SS] : this represents an elapsed time. It will be corrected with timezone so you can subtract it from a date.</li>
 	</ul>
 	</doc>
 **/
@@ -120,8 +120,8 @@ static value date_new( value s ) {
 }
 
 /**
-	date_format : #int32 -> fmt:string? -> string
-	<doc>Format a date using [strftime]. If [fmt] is [null] then default format is used</doc>
+	date_format : 'int32 -> fmt:string? -> string
+	<doc>Format a date using the [strftime] C function. If [fmt] is [null] then the default format ([%Y-%m-%d %H:%M:%S]) is used.</doc>
 **/
 static value date_format( value o, value fmt ) {
 	char buf[128];
@@ -140,8 +140,8 @@ static value date_format( value o, value fmt ) {
 }
 
 /**
-	date_utc_format : #int32 -> fmt:string? -> string
-	<doc>Format a date in UTC using [strftime]. If [fmt] is [null] then default format is used</doc>
+	date_utc_format : 'int32 -> fmt:string? -> string
+	<doc>Format a date in UTC using the [strftime] C function. If [fmt] is [null] then the default format ([%Y-%m-%d %H:%M:%S]) is used.</doc>
 **/
 static value date_utc_format( value o, value fmt ) {
 	char buf[128];
@@ -160,8 +160,8 @@ static value date_utc_format( value o, value fmt ) {
 }
 
 /**
-	date_set_hour : #int32 -> h:int -> m:int -> s:int -> 'int32
-	<doc>Change the time of a date. Return the modified date</doc>
+	date_set_hour : 'int32 -> h:int -> m:int -> s:int -> 'int32
+	<doc>Change the time of a date. Returns the modified date.</doc>
 **/
 static value date_set_hour( value o, value h, value m, value s ) {
 	struct tm t;
@@ -183,8 +183,8 @@ static value date_set_hour( value o, value h, value m, value s ) {
 }
 
 /**
-	date_set_day : #int32 -> y:int -> m:int -> d:int -> 'int32
-	<doc>Change the day of a date. Return the modified date</doc>
+	date_set_day : 'int32 -> y:int -> m:int -> d:int -> 'int32
+	<doc>Change the day of a date. Returns the modified date.</doc>
 **/
 static value date_set_day( value o, value y, value m, value d ) {
 	struct tm t;
@@ -206,8 +206,8 @@ static value date_set_day( value o, value y, value m, value d ) {
 }
 
 /**
-	date_get_day : #int32 -> { y => int, m => int, d => int }
-	<doc>Return the year month and day of a date</doc>
+	date_get_day : 'int32 -> { y => int, m => int, d => int }
+	<doc>Return the year, month and day of a date.</doc>
 **/
 static value date_get_day( value o ) {
 	value r;
@@ -225,8 +225,8 @@ static value date_get_day( value o ) {
 }
 
 /**
-	date_get_utc_day : #int32 -> { y => int, m => int, d => int }
-	<doc>Return the year month and day of a date in UTC</doc>
+	date_get_utc_day : 'int32 -> { y => int, m => int, d => int }
+	<doc>Return the year month and day of a date in UTC.</doc>
 **/
 static value date_get_utc_day( value o ) {
 	value r;
@@ -244,8 +244,8 @@ static value date_get_utc_day( value o ) {
 }
 
 /**
-	date_get_hour : #int32 -> { h => int, m => int, s => int }
-	<doc>Return the hour minutes and seconds of a date</doc>
+	date_get_hour : 'int32 -> { h => int, m => int, s => int }
+	<doc>Return the hour, minutes and seconds of a date.</doc>
 **/
 static value date_get_hour( value o ) {
 	value r;
@@ -263,8 +263,8 @@ static value date_get_hour( value o ) {
 }
 
 /**
-	date_get_utc_hour : #int32 -> { h => int, m => int, s => int }
-	<doc>Return the hour minutes and seconds of a date in UTC</doc>
+	date_get_utc_hour : 'int32 -> { h => int, m => int, s => int }
+	<doc>Return the hour minutes and seconds of a date in UTC.</doc>
 **/
 static value date_get_utc_hour( value o ) {
 	value r;
@@ -282,16 +282,20 @@ static value date_get_utc_hour( value o ) {
 }
 
 /**
-	date_get_tz : #int32 -> int
-	<doc>Return the timezone offset from UTC (in minutes) for the given date</doc>
+	date_get_tz : 'int32? -> int
+	<doc>Return the timezone offset from UTC (in minutes) for the given date. Pass in [null] for the local timezone.</doc>
 **/
 static value date_get_tz( value o ) {
 	struct tm local;
 	struct tm gmt;
 	int diff;
 	time_t raw;
-	val_check(o,any_int);
-	raw = val_any_int(o);
+	if( val_is_null(o) )
+		raw = time(NULL);
+	else {
+		val_check(o,any_int);
+		raw = val_any_int(o);
+	}
 	if( localtime_r(&raw, &local) == NULL || gmtime_r(&raw, &gmt) == NULL )
 		neko_error();
 	diff = (local.tm_hour - gmt.tm_hour) * 60 + (local.tm_min - gmt.tm_min);
