@@ -46,6 +46,18 @@ DEFINE_KIND( k_ssl );
 DEFINE_KIND( k_cert );
 DEFINE_KIND( k_pkey );
 
+/**
+	<doc>
+		<h1>SSL</h1>
+		<p>
+			Support for SSL/TLS connections, X.509 certificates, and public/private keys.
+		</p>
+		</p>
+		Functions need to be loaded from the ssl.ndll library : [$loader.loadprim("mysql@...")]
+		</p>
+	</doc>
+**/
+
 static vkind k_socket;
 static mbedtls_entropy_context entropy;
 static mbedtls_ctr_drbg_context ctr_drbg;
@@ -69,7 +81,7 @@ static value block_error() {
 	if( errno == EAGAIN || errno == EWOULDBLOCK || errno == EINPROGRESS || errno == EALREADY )
 	#endif
 		val_throw(alloc_string("Blocking"));
-	val_throw(alloc_string("ssl network error"));
+	val_throw(alloc_string("SSL network error"));
 	return val_true;
 }
 
@@ -80,6 +92,12 @@ static value ssl_error( int ret ){
 	return val_false;
 }
 
+/**
+	ssl_new : 'ssl_config -> 'ssl
+	<doc>
+	Create a new SSL context with the given configuration.
+  </doc>
+**/
 static value ssl_new( value config ) {
 	int ret;
 	mbedtls_ssl_context *ssl;
@@ -93,6 +111,12 @@ static value ssl_new( value config ) {
 	return alloc_abstract( k_ssl, ssl );
 }
 
+/**
+	ssl_close : 'ssl -> void
+	<doc>
+	Destroys the SSL context. Any other operations on this object will fail.
+  </doc>
+**/
 static value ssl_close( value ssl ) {
 	mbedtls_ssl_context *s;
 	val_check_kind(ssl,k_ssl);
@@ -102,6 +126,13 @@ static value ssl_close( value ssl ) {
 	return val_true;
 }
 
+/**
+	ssl_handshake : 'ssl -> true
+	<doc>
+	Perform an SSL handshake. Throws an exception if it fails.
+	The SSL connection should no longer be used if an error occurs.
+  </doc>
+**/
 static value ssl_handshake( value ssl ) {
 	int r;
 	val_check_kind(ssl,k_ssl);
@@ -123,6 +154,12 @@ int net_write( void *fd, const unsigned char *buf, size_t len ){
 	return send((SOCKET)(int_val)fd, (char *)buf, len, 0);
 }
 
+/**
+	ssl_set_socket : 'ssl -> 'socket -> void
+	<doc>
+	Associates a socket with an SSL context.
+  </doc>
+**/
 static value ssl_set_socket( value ssl, value socket ) {
 	val_check_kind(ssl,k_ssl);
 	if( k_socket == NULL )
@@ -132,6 +169,12 @@ static value ssl_set_socket( value ssl, value socket ) {
 	return val_true;
 }
 
+/**
+	ssl_set_hostname : 'ssl -> string -> void
+	<doc>
+	Sets the hostname to check against the received server SSL certificate.
+  </doc>
+**/
 static value ssl_set_hostname( value ssl, value hostname ){
 	int ret;
 	val_check_kind(ssl,k_ssl);
@@ -141,6 +184,12 @@ static value ssl_set_hostname( value ssl, value hostname ){
 	return val_true;
 }
 
+/**
+	ssl_get_peer_certificate : 'ssl -> 'cert
+	<doc>
+	Return the peer certificate from the current SSL connection.
+  </doc>
+**/
 static value ssl_get_peer_certificate( value ssl ){
 	value v;
 	const mbedtls_x509_crt *crt;
@@ -152,6 +201,13 @@ static value ssl_get_peer_certificate( value ssl ){
 	return v;
 }
 
+/**
+	ssl_get_verify_result : 'ssl -> bool
+	<doc>
+	Return the result of certificate verification.
+	Throws an exception if the result is not available (such as if the handshake aborts early or an internal error occurs).
+  </doc>
+**/
 static value ssl_get_verify_result( value ssl ){
 	int r;
 	val_check_kind(ssl,k_ssl);
@@ -164,6 +220,12 @@ static value ssl_get_verify_result( value ssl ){
 	return val_false;
 }
 
+/**
+	ssl_send_char : 'ssl -> int -> void
+	<doc>
+	Send a character over the SSL connection. Must be in the range 0..255
+  </doc>
+**/
 static value ssl_send_char( value ssl, value v ) {
 	unsigned char cc;
 	int c;
@@ -177,6 +239,13 @@ static value ssl_send_char( value ssl, value v ) {
 	return val_true;
 }
 
+/**
+	ssl_send : 'ssl -> buf:string -> pos:int -> len:int -> int
+	<doc>
+	Send up to [len] bytes from [buf] starting at [pos] over the SSL connection.
+	Return the number of bytes sent.
+  </doc>
+**/
 static value ssl_send( value ssl, value data, value pos, value len ) {
 	int p,l,dlen;
 	val_check_kind(ssl,k_ssl);
@@ -197,6 +266,12 @@ static value ssl_send( value ssl, value data, value pos, value len ) {
 	return alloc_int(dlen);
 }
 
+/**
+	ssl_write : 'ssl -> string -> void
+	<doc>
+	Send the entire contents of a string over the SSL connection.
+	</doc>
+**/
 static value ssl_write( value ssl, value data ) {
 	int len, slen;
 	const unsigned char *s;
@@ -219,6 +294,12 @@ static value ssl_write( value ssl, value data ) {
 	return val_true;
 }
 
+/**
+	socket_recv_char : 'ssl -> int
+	<doc>
+	Read a single char from the SSL connection.
+	</doc>
+**/
 static value ssl_recv_char(value ssl) {
 	unsigned char c;
 	int r;
@@ -229,6 +310,13 @@ static value ssl_recv_char(value ssl) {
 	return alloc_int( c );
 }
 
+/**
+	ssl_recv : 'ssl -> buf:string -> pos:int -> len:int -> int
+	<doc>
+	Read up to [len] bytes from [buf] starting at [pos] from the SSL connection.
+	Returns the number of bytes read.
+	</doc>
+**/
 static value ssl_recv( value ssl, value data, value pos, value len ) {
 	int p,l,dlen;
 	void * buf;
@@ -252,6 +340,13 @@ static value ssl_recv( value ssl, value data, value pos, value len ) {
 	return alloc_int( dlen );
 }
 
+/**
+	ssl_read : 'ssl -> string
+	<doc>
+	Read all of the data available from the SSL connection until the connection closes.
+	If the socket hasn't been closed by the other side, the function might block.
+	</doc>
+**/
 static  value ssl_read( value ssl ) {
 	int len, bufsize = 256;
 	buffer b;
@@ -276,6 +371,12 @@ static  value ssl_read( value ssl ) {
 	return buffer_to_string(b);
 }
 
+/**
+	conf_new : server:bool -> 'ssl_conf
+	<doc>
+	Create a new empty SSL configuration object. The connection is used for a server if [server] is true.
+  </doc>
+**/
 static value conf_new( value server ) {
 	int ret;
 	mbedtls_ssl_config *conf;
@@ -291,6 +392,12 @@ static value conf_new( value server ) {
 	return alloc_abstract( k_ssl_conf, conf );
 }
 
+/**
+	conf_close : 'ssl_conf -> void
+	<doc>
+	Destroys the SSL configuration. This must not be done while any SSL connections that are using it are stil active. Any other operations on this object will fail.
+	</doc>
+**/
 static value conf_close( value config ) {
 	mbedtls_ssl_config *conf;
 	val_check_kind(config,k_ssl_conf);
@@ -300,6 +407,12 @@ static value conf_close( value config ) {
 	return val_true;
 }
 
+/**
+	conf_set_ca : 'ssl_conf -> 'cert -> void
+	<doc>
+	Sets the Certificate Authority used to verify a peer certificate.
+	</doc>
+**/
 static value conf_set_ca( value config, value cert ) {
 	val_check_kind(config,k_ssl_conf);
 	if( !val_is_null(cert) ) val_check_kind(cert,k_cert);
@@ -307,6 +420,13 @@ static value conf_set_ca( value config, value cert ) {
 	return val_true;
 }
 
+/**
+	conf_set_verify : 'ssl_conf -> mode:bool? -> void
+	<doc>
+	Sets the peer certificate verification mode. If [mode] is true, verification is required. If [mode] is false, verification is not performed. If [mode] is null, verification is optional.
+	Unless the verification mode is set using this function, the default will be false/none for servers, and true/required for clients.
+	</doc>
+**/
 static value conf_set_verify( value config, value b ) {
 	val_check_kind(config, k_ssl_conf);
 	if( !val_is_null(b) ) val_check(b, bool);
@@ -319,6 +439,13 @@ static value conf_set_verify( value config, value b ) {
 	return val_true;
 }
 
+/**
+	conf_set_cert : 'ssl_conf -> 'cert -> 'pkey -> void
+	<doc>
+	Sets the certificate chain and private key.
+	This can be called multiple times for servers for different certificate/key configurations. For clients, only the first call has an effect.
+	</doc>
+**/
 static value conf_set_cert( value config, value cert, value key ) {
 	int r;
 	val_check_kind(config,k_ssl_conf);
@@ -342,6 +469,13 @@ static int sni_callback( void *arg, mbedtls_ssl_context *ctx, const unsigned cha
 	return -1;
 }
 
+/**
+	conf_set_servername_callback : 'ssl_conf -> function:1 -> void
+	<doc>
+	Sets a callback function to be called by a server if a client sends a ServerName TLS extension during a handshake.
+	The callback function takes a single string which is the hostname and returns a [{ cert => string, key => string}] object with the needed certificate and key for the handshake. If the callback function returns null, then the handshake is aborted.
+	</doc>
+**/
 static value conf_set_servername_callback( value config, value cb ){
 	val_check_kind(config,k_ssl_conf);
 	val_check_function(cb,1);
@@ -349,6 +483,12 @@ static value conf_set_servername_callback( value config, value cb ){
 	return val_true;
 }
 
+/**
+	cert_load_file : string -> 'cert
+	<doc>
+	Loads one or more certificates from a file.
+	</doc>
+**/
 static value cert_load_file(value file){
 	int r;
 	mbedtls_x509_crt *x;
@@ -364,6 +504,12 @@ static value cert_load_file(value file){
 	return v;
 }
 
+/**
+	cert_load_path : string -> 'cert
+	<doc>
+	Loads one or more certificates from a directory.
+	</doc>
+**/
 static value cert_load_path(value path){
 	int r;
 	mbedtls_x509_crt *x;
@@ -379,6 +525,15 @@ static value cert_load_path(value path){
 	return v;
 }
 
+/**
+	cert_load_defaults : void -> 'cert?
+	<doc>
+	Provides one or more certificates based on the operating system configuration.
+	On Windows, this looks in the Root certificate store.
+	On MacOS, this looks in the SystemRootCertificates keychain.
+	Returns null if there are no default certificates defined on the system.
+	</doc>
+**/
 static value cert_load_defaults(){
 #if defined(NEKO_WINDOWS)
 	value v;
@@ -459,6 +614,12 @@ static value asn1_buf_to_string( mbedtls_asn1_buf *dat ){
 	return buf;
 }
 
+/**
+	cert_get_subject : 'cert -> string -> string?
+	<doc>
+	Returns the Subject field of a certificate with the specified object name.
+	</doc>
+**/
 static value cert_get_subject( value cert, value objname ){
 	mbedtls_x509_crt *crt;
 	mbedtls_x509_name *obj;
@@ -480,6 +641,12 @@ static value cert_get_subject( value cert, value objname ){
 	return val_null;
 }
 
+/**
+	cert_get_issuer : 'cert -> string -> string?
+	<doc>
+	Returns the Issuer field of a certificate with the specified object name.
+	</doc>
+**/
 static value cert_get_issuer(value cert, value objname){
 	mbedtls_x509_crt *crt;
 	mbedtls_x509_name *obj;
@@ -501,7 +668,12 @@ static value cert_get_issuer(value cert, value objname){
 	return val_null;
 }
 
-
+/**
+	cert_get_altnames : 'cert -> array?
+	<doc>
+	Returns the entries of the optional Subject Alternative Names extension field of a certificate.
+	</doc>
+**/
 static value cert_get_altnames( value cert ){
 	mbedtls_x509_crt *crt;
 	mbedtls_asn1_sequence *cur;
@@ -541,6 +713,12 @@ static value x509_time_to_array( mbedtls_x509_time *t ){
 	return v;
 }
 
+/**
+	cert_get_notbefore : 'cert -> string?
+	<doc>
+	Returns the start time of certificate validity.
+	</doc>
+**/
 static value cert_get_notbefore(value cert){
 	mbedtls_x509_crt *crt;
 	val_check_kind(cert, k_cert);
@@ -550,6 +728,12 @@ static value cert_get_notbefore(value cert){
 	return x509_time_to_array( &crt->valid_from );
 }
 
+/**
+	cert_get_notafter : 'cert -> string?
+	<doc>
+	Returns the end time of certificate validity.
+	</doc>
+**/
 static value cert_get_notafter(value cert){
 	mbedtls_x509_crt *crt;
 	val_check_kind(cert, k_cert);
@@ -559,6 +743,12 @@ static value cert_get_notafter(value cert){
 	return x509_time_to_array( &crt->valid_to );
 }
 
+/**
+	cert_get_next : 'cert -> object?
+	<doc>
+	Returns the next certificate in a chain of certificates, if there is one.
+	</doc>
+**/
 static value cert_get_next( value cert ){
 	mbedtls_x509_crt *crt;
 	value v;
@@ -571,6 +761,12 @@ static value cert_get_next( value cert ){
 	return v;
 }
 
+/**
+	cert_add_pem : 'cert? -> data:string -> 'cert
+	<doc>
+	Parses a certificate in PEM format and adds it to the chain of certificates.
+	</doc>
+**/
 static value cert_add_pem( value cert, value data ){
 	mbedtls_x509_crt *crt;
 	int r, len;
@@ -596,6 +792,12 @@ static value cert_add_pem( value cert, value data ){
 	return cert;
 }
 
+/**
+	cert_add_der : 'cert? -> data:string -> 'cert
+	<doc>
+	Parses a certificate in DER format and adds it to the chain of certificates.
+	</doc>
+**/
 static value cert_add_der( value cert, value data ){
 	mbedtls_x509_crt *crt;
 	int r;
@@ -616,6 +818,13 @@ static value cert_add_der( value cert, value data ){
 	return cert;
 }
 
+/**
+	key_from_der : data:string -> public:bool -> 'pkey
+	<doc>
+	Parses a key from a certificate in DER format.
+	The key is a public key if [public] is true, private otherwise.
+	</doc>
+**/
 static value key_from_der( value data, value pub ){
 	mbedtls_pk_context *pk;
 	int r;
@@ -637,6 +846,14 @@ static value key_from_der( value data, value pub ){
 	return v;
 }
 
+/**
+	key_from_pem : data:string -> public:bool -> pass:string? -> 'pkey
+	<doc>
+	Parses a public key from a certificate in PEM format.
+	The key is a public key if [public] is true, private otherwise.
+	An optional password may be specified for decryption.
+	</doc>
+**/
 static value key_from_pem(value data, value pub, value pass){
 	mbedtls_pk_context *pk;
 	int r, len;
@@ -666,6 +883,12 @@ static value key_from_pem(value data, value pub, value pass){
 	return v;
 }
 
+/**
+	dgst_make : data:string -> alg:string -> string
+	<doc>
+	Build a message digest (binary string) from the string [data] using the algorithm named in [alg].
+	</doc>
+**/
 static value dgst_make(value data, value alg){
 	const mbedtls_md_info_t *md;
 	int r = -1;
@@ -686,6 +909,12 @@ static value dgst_make(value data, value alg){
 	return out;
 }
 
+/**
+	dgst_sign : data:string -> key:'pkey -> alg:string -> string
+	<doc>
+	Sign a message [data] using the key and the message digest algorithm named in [alg].
+	</doc>
+**/
 static value dgst_sign(value data, value key, value alg){
 	const mbedtls_md_info_t *md;
 	int r = -1;
@@ -716,7 +945,12 @@ static value dgst_sign(value data, value key, value alg){
 	return out;
 }
 
-
+/**
+	dgst_verify : data:string -> sign:string -> key:'pkey -> alg:string -> string
+	<doc>
+	Verify the signature [sign] for a message [data] using the key and the message digest algorithm named in [alg].
+	</doc>
+**/
 static value dgst_verify( value data, value sign, value key, value alg ){
 	const mbedtls_md_info_t *md;
 	int r = -1;
