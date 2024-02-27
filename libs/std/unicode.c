@@ -33,7 +33,7 @@
 	some exception or not depending on the malformed data.
 	</p>
 	<p>
-	Supported encodings are "ascii", "iso-latin1", "utf8", "ucs2-le", "ucs2-be", "utf16-le", "utf16-be", "utf32-le", "utf32-be"
+	Supported encodings are "ascii", "iso-latin1", "utf8", "ucs2-le", "ucs2-be", "utf16-le", "utf16-be", "utf32-le", "utf32-be".
 	</p>
 	</doc>
 **/
@@ -295,7 +295,7 @@ static uchar uchar_get( ustring *rstr, int size, encoding e, int pos ) {
 
 /**
 	unicode_encoding : string -> int
-	<doc>Gets the encoding code corresponding the given value
+	<doc>Gets the encoding code corresponding the given value.
 		ascii=0
 		iso-latin1=1
 		utf8=2
@@ -339,7 +339,7 @@ static encoding get_encoding( value v ) {
 }
 
 /**
-	unicode_buf_alloc : size:int -> encoding:int -> 'ubuf
+	unicode_buf_alloc : size:int -> encoding:int -> 'uni_buf
 	<doc>Create a new buffer with an initial size in bytes and specific encoding.</doc>
 **/
 static value unicode_buf_alloc( value size, value encoding ) {
@@ -367,8 +367,8 @@ static void unicode_buf_resize( uni_buf *b ) {
 
 
 /**
-	unicode_buf_add : 'buf -> int -> void
-	<doc>Add an Unicode char to the buffer</doc>
+	unicode_buf_add : 'uni_buf -> int -> void
+	<doc>Add a Unicode char to the buffer.</doc>
 **/
 static value unicode_buf_add( value buf, value uc ) {
 	uni_buf *b;
@@ -388,11 +388,11 @@ static value unicode_buf_add( value buf, value uc ) {
 }
 
 /**
-	unicode_buf_content : 'buf -> string
+	unicode_buf_content : 'uni_buf -> string
 	<doc>
 	Return the current content of the buffer.
 	This is not a copy of the buffer but the shared content.
-	Retreiving content and then continuing to add chars is
+	Retrieving content and then continuing to add chars is
 	possible but not very efficient.
 	</doc>
 **/
@@ -406,8 +406,8 @@ static value unicode_buf_content( value buf ) {
 }
 
 /**
-	unicode_buf_length : 'buf -> int
-	<doc>Return the number of Unicode chars stored in the buffer</doc>
+	unicode_buf_length : 'uni_buf -> int
+	<doc>Return the number of Unicode chars stored in the buffer.</doc>
 **/
 static value unicode_buf_length( value buf ) {
 	uni_buf *b;
@@ -417,8 +417,8 @@ static value unicode_buf_length( value buf ) {
 }
 
 /**
-	unicode_buf_size : 'buf -> int
-	<doc>Return the current size in bytes of the buffer</doc>
+	unicode_buf_size : 'uni_buf -> int
+	<doc>Return the current size in bytes of the buffer.</doc>
 **/
 static value unicode_buf_size( value buf ) {
 	uni_buf *b;
@@ -571,7 +571,7 @@ static value unicode_length( value str, value enc ) {
 
 /**
 	unicode_sub : string -> encoding:int -> pos:int -> len:int -> string
-	<doc>Returns a part of an Unicode string.</doc>
+	<doc>Returns a part of a Unicode string.</doc>
 **/
 static value unicode_sub( value str, value enc, value vpos, value vlen ) {
 	int l;
@@ -601,7 +601,7 @@ static value unicode_sub( value str, value enc, value vpos, value vlen ) {
 /**
 	unicode_get : string -> encoding:int -> n:int -> int
 	<doc>Returns the [n]th char in an Unicode string.
-	This might be inefficient if [n] is big and the string has variable length per char.</doc>
+	This might be inefficient if [n] is large and the string has variable length per char.</doc>
 **/
 static value unicode_get( value str, value enc, value pos ) {
 	uchar c;
@@ -636,7 +636,7 @@ static value unicode_iter( value str, value enc, value f ) {
 
 /**
 	unicode_compare : s1:string -> s2:string -> encoding:int -> int
-	<doc>Compare two Unicode strings according to their char codes.</doc>
+	<doc>Compare two Unicode strings according to their character codes.</doc>
 **/
 static value unicode_compare( value str1, value str2, value enc ) {
 	int l1, l2, l;
@@ -782,7 +782,7 @@ static void expand( value *str, int *len ) {
 
 /**
 	unicode_convert : string -> encoding:int -> to_encoding:int -> string
-	<doc>Convert an Unicode string from a given encoding to another.</doc>
+	<doc>Convert a Unicode string from a given encoding to another.</doc>
 **/
 static value unicode_convert( value str, value encoding, value to_encoding ) {
 	ustring s, end;
@@ -866,7 +866,7 @@ static value unicode_convert( value str, value encoding, value to_encoding ) {
 
 /**
 	unicode_lower : string -> encoding:int -> string
-	<doc>Returns the lowercase version of the unicode string.</doc>
+	<doc>Returns the lowercase version of the Unicode string.</doc>
 **/
 static value unicode_lower( value str, value enc ) {
 	ustring s,end;
@@ -901,7 +901,7 @@ static value unicode_lower( value str, value enc ) {
 
 /**
 	unicode_upper : string -> encoding:int -> string
-	<doc>Returns the lowercase version of the unicode string.</doc>
+	<doc>Returns the uppercase version of the Unicode string.</doc>
 **/
 static value unicode_upper( value str, value enc ) {
 	ustring s,end;
