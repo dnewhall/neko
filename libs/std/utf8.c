@@ -76,7 +76,7 @@ static void utf8_buf_resize( ubuf *b ) {
 
 
 /**
-	utf8_buf_add : 'buf -> int -> void
+	utf8_buf_add : 'ubuf -> int -> void
 	<doc>Add a valid UTF-8 character (0 - 0x10FFFF) to the buffer.</doc>
 **/
 static value utf8_buf_add( value buf, value uchar ) {
@@ -117,7 +117,7 @@ static value utf8_buf_add( value buf, value uchar ) {
 }
 
 /**
-	utf8_buf_content : 'buf -> string
+	utf8_buf_content : 'ubuf -> string
 	<doc>
 	Return the current content of the buffer.
 	This is not a copy of the buffer but the shared content.
@@ -135,7 +135,7 @@ static value utf8_buf_content( value buf ) {
 }
 
 /**
-	utf8_buf_length : 'buf -> int
+	utf8_buf_length : 'ubuf -> int
 	<doc>Return the number of UTF-8 characters stored in the buffer.</doc>
 **/
 static value utf8_buf_length( value buf ) {
@@ -146,7 +146,7 @@ static value utf8_buf_length( value buf ) {
 }
 
 /**
-	utf8_buf_size : 'buf -> int
+	utf8_buf_size : 'ubuf -> int
 	<doc>Return the current size in bytes of the buffer.</doc>
 **/
 static value utf8_buf_size( value buf ) {
@@ -158,7 +158,7 @@ static value utf8_buf_size( value buf ) {
 
 /**
 	utf8_validate : string -> bool
-	<doc>Validate if a string is encoded using the UTF-8 format.</doc>
+	<doc>Tells us if a string is validly encoded using the UTF-8 format.</doc>
 **/
 static value utf8_validate( value str ) {
 	int l;
