@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 	<head>
-		<title>API - UTF8 - NekoVM</title>
-		<meta name="date" content="2016-01-01T12:00:05+0100" />
+		<title>API - Unicode - NekoVM</title>
+		<meta name="date" content="2024-02-26T17:36:05-0500" />
 		<meta name="robots" content="index,follow" />
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="stylesheet" media="screen" type="text/css" href="/css/style.min.css"/>
 		<link rel="stylesheet" media="screen" type="text/css" href="/css/code-highlight.css"/>
 		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,700,700italic,400italic" />
 		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:200,600,600italic,400" />
-		<link rel="canonical" href="https://nekovm.org/doc/view/utf8/"/></head>
+		<link rel="canonical" href="https://nekovm.org/doc/view/unicode/"/></head>
 	<body>
 		
 		<!--
@@ -21,8 +21,8 @@
 			function startsWith(str, searchString){
 				return str.substr(0, searchString.length) === searchString;
 			}
-			if (!startsWith(location.href, "https://nekovm.org/doc/view/utf8/")) {
-				window.location.replace("https://nekovm.org/doc/view/utf8/");
+			if (!startsWith(location.href, "https://nekovm.org/doc/view/unicode/")) {
+				window.location.replace("https://nekovm.org/doc/view/unicode/");
 			}
 		</script>-->
 		<nav>
@@ -84,23 +84,26 @@
 	<html>
 
 
-	<h1>UTF8</h1>
+	<h1>Unicode</h1>
 	<p>
-	Operations on UTF-8 strings. 
-	Most of the operations are optimized for speed so they might still 
-	succeed on some malformed UTF8 string. The only function that completely
-	checks the UTF8 format is <doc_code>utf8_validate</doc_code>. Other functions might raise
+	Operations on Unicode strings.
+	Most of the operations are optimized for speed so they might still
+	succeed on some malformed Unicode string. The only function that completely
+	check the Unicode format is <doc_code>unicode_validate</doc_code>. Other functions might raise
 	some exception or not depending on the malformed data.
+	</p>
+	<p>
+	Supported encodings are "ascii", "iso-latin1", "utf8", "ucs2-le", "ucs2-be", "utf16-le", "utf16-be", "utf32-le", "utf32-be".
 	</p>
 	
 <doc_blk>
-  <doc_type>'ubuf</doc_type> <doc_name>utf8_buf_alloc</doc_name><doc_type>(size : int)</doc_type> <doc_doc>Create a new buffer with an initial size in bytes.</doc_doc>
+  <doc_type>'ubuf</doc_type> <doc_name>unicode_buf_alloc</doc_name><doc_type>(size : int)</doc_type> <doc_doc>Create a new buffer with an initial size in bytes and specific encoding.</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>void</doc_type> <doc_name>utf8_buf_add</doc_name><doc_type>('ubuf, int)</doc_type> <doc_doc>Add a valid UTF-8 char (0 - 0x10FFFF) to the buffer.</doc_doc>
+  <doc_type>void</doc_type> <doc_name>unicode_buf_add</doc_name><doc_type>('uni_buf, int)</doc_type> <doc_doc>Add a Unicode char to the buffer.</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>string</doc_type> <doc_name>utf8_buf_content</doc_name><doc_type>('ubuf)</doc_type> <doc_doc>
+  <doc_type>string</doc_type> <doc_name>unicode_buf_content</doc_name><doc_type>('uni_buf)</doc_type> <doc_doc>
 	Return the current content of the buffer.
 	This is not a copy of the buffer but the shared content.
 	Retrieving content and then continuing to add characters is 
@@ -108,29 +111,38 @@
 	</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>int</doc_type> <doc_name>utf8_buf_length</doc_name><doc_type>('ubuf)</doc_type> <doc_doc>Return the number of UTF-8 characters stored in the buffer.</doc_doc>
+  <doc_type>int</doc_type> <doc_name>unicode_buf_length</doc_name><doc_type>('uni_buf)</doc_type> <doc_doc>Return the number of UTF-8 characters stored in the buffer.</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>int</doc_type> <doc_name>utf8_buf_size</doc_name><doc_type>('ubuf)</doc_type> <doc_doc>Return the current size in bytes of the buffer.</doc_doc>
+  <doc_type>int</doc_type> <doc_name>unicode_buf_size</doc_name><doc_type>('uni_buf)</doc_type> <doc_doc>Return the current size in bytes of the buffer.</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>bool</doc_type> <doc_name>utf8_validate</doc_name><doc_type>(string)</doc_type> <doc_doc>Tells us if a string is validly encoded using the UTF-8 format.</doc_doc>
+  <doc_type>bool</doc_type> <doc_name>unicode_validate</doc_name><doc_type>(s :  string, encoding : int)</doc_type> <doc_doc>Tells if a string <doc_code>s<doc_code> is validly encoded using the given Unicode format.</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>int</doc_type> <doc_name>utf8_length</doc_name><doc_type>(string)</doc_type> <doc_doc>Returns the number of UTF-8 chars in the string.</doc_doc>
+  <doc_type>int</doc_type> <doc_name>unicode_length</doc_name><doc_type>(string, encoding : int)</doc_type> <doc_doc>Returns the number of Unicode chars in the string.</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>string</doc_type> <doc_name>utf8_sub</doc_name><doc_type>(string, pos : int, len : int)</doc_type> <doc_doc>Returns a part of a UTF-8 string.</doc_doc>
+  <doc_type>string</doc_type> <doc_name>unicode_sub</doc_name><doc_type>(string,, encoding : int, pos : int, len : int)</doc_type> <doc_doc>Returns a part of a Unicode string.</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>int</doc_type> <doc_name>utf8_get</doc_name><doc_type>(string, n : int)</doc_type> <doc_doc>Returns the <doc_code>n</doc_code>th char in a UTF-8 string. 
-	This might be inefficient if <doc_code>n</doc_code> is large.</doc_doc>
+  <doc_type>int</doc_type> <doc_name>unicode_get</doc_name><doc_type>(string, encoding : int, n : int)</doc_type> <doc_doc>Returns the <doc_code>n</doc_code>th char in a Unicode string. 
+	This might be inefficient if <doc_code>n</doc_code> is large and the string has variable length per char.</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>void</doc_type> <doc_name>utf8_iter</doc_name><doc_type>(string, f : ((int -> void)))</doc_type> <doc_doc>Call function <doc_code>f</doc_code> with each UTF-8 character of the string.</doc_doc>
+  <doc_type>void</doc_type> <doc_name>unicode_iter</doc_name><doc_type>(string, encoding : int, f : ((int -> void)))</doc_type> <doc_doc>Call function <doc_code>f</doc_code> with each Unicode char of the string.</doc_doc>
 </doc_blk>
 <doc_blk>
-  <doc_type>int</doc_type> <doc_name>utf8_compare</doc_name><doc_type>(s1 : string, s2 : string)</doc_type> <doc_doc>Compare two UTF-8 strings according to UTF-8 character codes.</doc_doc>
+  <doc_type>int</doc_type> <doc_name>unicode_compare</doc_name><doc_type>(s1 : string, s2 : string, encoding : int)</doc_type> <doc_doc>Compare two Unicode strings according to Unicode character codes.</doc_doc>
+</doc_blk>
+<doc_blk>
+  <doc_type>int</doc_type> <doc_name>unicode_convert</doc_name><doc_type>(s1 : string, encoding : int, to_encoding : int)</doc_type> <doc_doc>Convert a Unicode string from a given encoding to another.</doc_doc>
+</doc_blk>
+<doc_blk>
+  <doc_type>int</doc_type> <doc_name>unicode_lower</doc_name><doc_type>(string, encoding : int)</doc_type> <doc_doc>Returns the lowercase version of the Unicode string.</doc_doc>
+</doc_blk>
+<doc_blk>
+  <doc_type>int</doc_type> <doc_name>unicode_upper</doc_name><doc_type>(string, encoding : int)</doc_type> <doc_doc>Returns the uppercase version of the Unicode string.</doc_doc>
 </doc_blk>
 
 </html>
